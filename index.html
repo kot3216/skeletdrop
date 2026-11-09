@@ -67,7 +67,7 @@ header{padding:12px 22px;display:flex;align-items:center;justify-content:space-b
 
 main{max-width:1080px;margin:auto;padding:18px 16px 130px}
 
-.reveal{opacity:0;transform:translateY(28px) scale(.985);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
 .reveal.on{opacity:1;transform:none}
 
 .hero{display:grid;grid-template-columns:1.15fr 1fr;min-height:300px;border-radius:30px;overflow:hidden;
@@ -1031,8 +1031,7 @@ function rocketStart(){
       multEl.textContent = "💥 ×" + rkState.crash.toFixed(2);
       multEl.style.color = "#ff6d8d";
       rocketEl.textContent = "💥"; rocketEl.style.transform = "none";
-      toast("Ракета взорвалась
-                  toast("Ракета взорвалась на ×" + rkState.crash.toFixed(2));
+      toast("Ракета взорвалась на ×" + rkState.crash.toFixed(2));
       document.getElementById("rkStart").disabled = false;
       document.getElementById("rkCash").disabled = true;
       rkState = null;
@@ -1136,7 +1135,6 @@ function wheelSpin(){
   }, 3100);
 }
 
-/* ================= LIVE ================= */
 const playerNames = ["neo_fox","dweee","Mira","tony","pixel_77","Luna","Max","Alex","kiryaa","Zoya","sk1e","dropp3r"];
 function liveItemHTML(){
   const g = gifts[Math.floor(Math.random()*gifts.length)];
@@ -1153,7 +1151,6 @@ function renderLive(){
   while(box.children.length > 8) box.lastElementChild.remove();
 }
 
-/* ================= HERO ================= */
 const heroSlides = [
   {title:"Подарки и приключения", sub:"Коллекция NFT-подарков и мини-игры", img:7},
   {title:"Оплата звёздами",       sub:"Официальное окно оплаты прямо в игре ⭐", img:8},
@@ -1177,7 +1174,6 @@ function heroNext(){
   document.querySelectorAll("#heroDots i").forEach((d,i) => d.classList.toggle("on", i === heroIndex));
 }
 
-/* ================= НАВИГАЦИЯ ================= */
 function scrollToId(id){ document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); }
 document.querySelectorAll("#bottomnav button").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -1210,11 +1206,16 @@ setInterval(() => {
 /* ================= СТАРТ ================= */
 document.getElementById("heroart").style.backgroundImage = `url("${gifts[7].image}")`;
 renderGames();
-if(TG_MODE){ tgLoad(); } else { render(); }
+render();
+if(TG_MODE){ tgLoad().catch(()=>{}); }
 for(let i=0;i<4;i++) renderLive();
 setInterval(renderLive, 3800);
 setInterval(heroNext, 5000);
 observeReveals();
+
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('on'));
+}, 200);
 </script>
 
 </body>
