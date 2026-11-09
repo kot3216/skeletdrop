@@ -185,7 +185,6 @@ h2 .chip{font-size:11px;font-weight:800;padding:5px 11px;border-radius:20px;colo
 .btn.secondary{background:#3d2a63;box-shadow:inset 0 1px 0 #ffffff22}
 .btn.mint{background:linear-gradient(110deg,#22c78c,#0e9c6e);box-shadow:0 4px 14px #22c78c44}
 .btn.tg{background:linear-gradient(110deg,#2aabee,#1d84c3);box-shadow:0 4px 14px #2aabee44}
-.btn.star{background:linear-gradient(110deg,#ffb84d,#ff8a3d);color:#3a2200;box-shadow:0 4px 14px #ffb84d44}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
 .paytabs{display:flex;gap:10px;margin:12px 0}
@@ -557,9 +556,9 @@ function payStars(stars,rub){
       <h3 style="margin:10px 0 6px">Инструкция</h3>
       <p class="muted">
         1. Нажми кнопку ниже — откроется профиль получателя<br>
-        2. Отправь <b style="color:#ffb84d">${stars} ⭐</b> через «Подарить звёзды»<br>
-        3. Пришли скрин оплаты в личку<br>
-        4. Получи промокод и введи его во вкладке «Промокод»
+        2. Открой профиль → <b>«⋮» → «Отправить подарок»</b><br>
+        3. Отправь <b style="color:#ffb84d">${stars} ⭐</b><br>
+        4. Пришли скрин в личку — получишь промокод
       </p>
     </div>
     <div class="xinfo">
@@ -568,6 +567,7 @@ function payStars(stars,rub){
     </div>
     <div class="grow" style="flex-direction:column">
       <button class="btn tg" onclick="openPayAcc()">✈️ Открыть профиль получателя</button>
+      <button class="btn secondary" onclick="copyAcc('${acc}')">📋 Скопировать @${acc}</button>
       <button class="btn" onclick="switchTab('promo')">🎟 Ввести промокод</button>
     </div>
   `);
@@ -575,11 +575,35 @@ function payStars(stars,rub){
 
 function openPayAcc(){
   const acc = getPayAcc();
-  const url = "https://t.me/" + acc;
-  if(TGW && TGW.openTelegramLink){
-    TGW.openTelegramLink(url);
+  const tgLink = "tg://resolve?domain=" + acc;
+  const httpLink = "https://t.me/" + acc;
+  
+  // Открываем через нативный deep link
+  const a = document.createElement("a");
+  a.href = tgLink;
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  
+  // Запасной вариант через 1.5 сек
+  setTimeout(() => {
+    if(!document.hidden){
+      window.open(httpLink, "_blank");
+    }
+  }, 1500);
+}
+
+function copyAcc(acc){
+  const text = "@" + acc;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(() => {
+      toast("Скопировано: " + text);
+    }).catch(() => {
+      toast("Скопируй вручную: " + text);
+    });
   } else {
-    window.open(url, "_blank");
+    toast("Скопируй вручную: " + text);
   }
 }
 
@@ -587,11 +611,11 @@ function activateCode(){
   const code = document.getElementById("promoInput").value.trim().toUpperCase();
   if(code.length < 4) return toast("Введи промокод");
   
-  // Простая проверка: код должен начинаться с SD- и иметь 6 символов после
-  // В реальном проекте здесь был бы запрос к серверу
   const validCodes = {
     "SD-TEST1": 50,
-    "SD-TEST2": 100
+    "SD-TEST2": 100,
+    "SD-TEST3": 250,
+    "SD-TEST4": 500
   };
   
   if(validCodes[code]){
@@ -737,7 +761,7 @@ function render(){
   document.getElementById("balance").textContent = "🔵 " + money(state.balance);
   document.getElementById("uname").textContent = state.name;
   document.getElementById("avatarBtn").textContent = state.avatar;
-  renderCases(); renderCollection(); renderShop();
+  renderGames(); renderCases(); renderCollection(); renderShop();
   observeReveals();
 }
 
@@ -1183,7 +1207,6 @@ setInterval(() => {
 
 /* ================= СТАРТ ================= */
 document.getElementById("heroart").style.backgroundImage = `url("${gifts[7].image}")`;
-renderGames();
 render();
 for(let i=0;i<4;i++) renderLive();
 setInterval(renderLive, 3800);
@@ -1192,4 +1215,4 @@ observeReveals();
 </script>
 
 </body>
-</html>
+  </html>
