@@ -7,196 +7,42 @@
 <title>SkeletDrop</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:#12081f;
-  color:#f6f2ff;
-  min-height:100vh;
-  overflow-x:hidden;
-}
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(18,8,31,0.95);
-  backdrop-filter:blur(10px);
-  padding:12px 16px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(168,85,247,0.2);
-}
-.logo{font-size:24px;font-weight:900;color:#a855f7}
-.balance{
-  background:rgba(168,85,247,0.2);
-  border:1px solid rgba(168,85,247,0.3);
-  border-radius:20px;
-  padding:8px 14px;
-  font-weight:700;
-  font-size:14px;
-}
-.btn-deposit{
-  background:linear-gradient(135deg,#a855f7,#6d28d9);
-  border:none;
-  color:white;
-  padding:10px 20px;
-  border-radius:20px;
-  font-weight:700;
-  font-size:14px;
-  cursor:pointer;
-}
-.avatar{
-  width:40px;height:40px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#4c2a78,#1e1233);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;
-  cursor:pointer;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#12081f;color:#f6f2ff;min-height:100vh;overflow-x:hidden}
+header{position:sticky;top:0;z-index:100;background:rgba(18,8,31,0.95);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(168,85,247,0.2);gap:8px}
+.logo{font-size:22px;font-weight:900;color:#a855f7;white-space:nowrap}
+.balance{background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.3);border-radius:20px;padding:8px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+.btn-deposit{background:linear-gradient(135deg,#a855f7,#6d28d9);border:none;color:white;padding:10px 16px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#4c2a78,#1e1233);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0}
 main{padding:16px;padding-bottom:100px}
-.hero{
-  background:linear-gradient(135deg,#4c1d95,#6d28d9);
-  border-radius:20px;
-  padding:24px;
-  margin-bottom:20px;
-  min-height:200px;
-  display:flex;flex-direction:column;justify-content:center;
-}
-.hero h1{font-size:28px;margin-bottom:8px}
-.hero p{font-size:16px;opacity:0.9;margin-bottom:16px}
-.hero button{
-  background:white;
-  color:#6d28d9;
-  border:none;
-  padding:12px 24px;
-  border-radius:20px;
-  font-weight:700;
-  font-size:16px;
-  cursor:pointer;
-  width:fit-content;
-}
+.hero{background:linear-gradient(135deg,#4c1d95,#6d28d9);border-radius:20px;padding:24px;margin-bottom:20px;min-height:180px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:26px;margin-bottom:8px}
+.hero p{font-size:15px;opacity:0.9;margin-bottom:16px}
+.hero button{background:white;color:#6d28d9;border:none;padding:12px 24px;border-radius:20px;font-weight:700;font-size:15px;cursor:pointer;width:fit-content}
 h2{font-size:22px;margin:24px 0 16px;color:#e9d5ff}
-.gamegrid,.casegrid,.giftgrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:12px;
-}
-.gamecard,.casecard,.giftcard{
-  background:rgba(168,85,247,0.1);
-  border:1px solid rgba(168,85,247,0.2);
-  border-radius:16px;
-  padding:12px;
-  cursor:pointer;
-  transition:transform 0.2s;
-}
-.gamecard:hover,.casecard:hover,.giftcard:hover{
-  transform:translateY(-4px);
-  border-color:rgba(168,85,247,0.5);
-}
-.gamecard img,.casecard img,.giftcard img{
-  width:100%;height:120px;object-fit:contain;
-  border-radius:12px;
-  margin-bottom:8px;
-}
-.gamecard h3,.casecard h3,.giftcard h3{
-  font-size:14px;margin-bottom:4px;
-}
-.online{
-  background:rgba(57,220,160,0.2);
-  color:#39dca0;
-  padding:4px 8px;
-  border-radius:10px;
-  font-size:11px;
-  font-weight:700;
-  display:inline-block;
-  margin-bottom:8px;
-}
-.price{
-  background:linear-gradient(135deg,#a855f7,#6d28d9);
-  padding:6px 12px;
-  border-radius:12px;
-  font-size:13px;
-  font-weight:700;
-  display:inline-block;
-}
+.gamegrid,.casegrid,.giftgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.gamecard,.casecard,.giftcard{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);border-radius:16px;padding:12px;cursor:pointer;transition:transform 0.2s}
+.gamecard:hover,.casecard:hover,.giftcard:hover{transform:translateY(-4px);border-color:rgba(168,85,247,0.5)}
+.gamecard img,.casecard img,.giftcard img{width:100%;height:120px;object-fit:contain;border-radius:12px;margin-bottom:8px}
+.gamecard h3,.casecard h3,.giftcard h3{font-size:14px;margin-bottom:4px}
+.online{background:rgba(57,220,160,0.2);color:#39dca0;padding:4px 8px;border-radius:10px;font-size:11px;font-weight:700;display:inline-block;margin-bottom:8px}
+.price{background:linear-gradient(135deg,#a855f7,#6d28d9);padding:6px 12px;border-radius:12px;font-size:13px;font-weight:700;display:inline-block}
 .price.free{background:linear-gradient(135deg,#22c78c,#0e9c6e)}
-.xbadge{
-  position:absolute;top:8px;right:8px;
-  background:linear-gradient(135deg,#ffd45d,#ff9d5c);
-  color:#3a2500;
-  padding:4px 8px;
-  border-radius:10px;
-  font-size:11px;
-  font-weight:900;
-}
+.xbadge{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#ffd45d,#ff9d5c);color:#3a2500;padding:4px 8px;border-radius:10px;font-size:11px;font-weight:900}
 .casecard{position:relative}
-.btn{
-  background:linear-gradient(135deg,#a855f7,#6d28d9);
-  border:none;
-  color:white;
-  padding:8px 16px;
-  border-radius:12px;
-  font-weight:700;
-  font-size:13px;
-  cursor:pointer;
-  width:100%;
-  margin-top:8px;
-}
+.btn{background:linear-gradient(135deg,#a855f7,#6d28d9);border:none;color:white;padding:8px 16px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-top:8px}
 .btn-secondary{background:rgba(255,255,255,0.1)}
-.bottom{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(18,8,31,0.95);
-  backdrop-filter:blur(10px);
-  border-top:1px solid rgba(168,85,247,0.2);
-  display:flex;justify-content:space-around;
-  padding:12px;
-  z-index:100;
-}
-.bottom button{
-  background:none;border:none;
-  color:#b3a5d6;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(18,8,31,0.95);backdrop-filter:blur(10px);border-top:1px solid rgba(168,85,247,0.2);display:flex;justify-content:space-around;padding:12px;z-index:100}
+.bottom button{background:none;border:none;color:#b3a5d6;font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
 .bottom button.active{color:#a855f7}
 .bottom button .bi{font-size:20px}
-.modal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.8);
-  display:none;align-items:center;justify-content:center;
-  z-index:200;padding:16px;
-}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
 .modal.show{display:flex}
-.modalbox{
-  background:#1e1233;
-  border-radius:20px;
-  padding:20px;
-  max-width:500px;
-  width:100%;
-  max-height:90vh;
-  overflow-y:auto;
-}
-.close-btn{
-  float:right;
-  background:rgba(255,255,255,0.1);
-  border:none;
-  color:white;
-  width:32px;height:32px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:18px;
-}
-.toast{
-  position:fixed;bottom:80px;left:50%;
-  transform:translateX(-50%);
-  background:rgba(38,20,66,0.95);
-  color:white;
-  padding:12px 20px;
-  border-radius:12px;
-  font-weight:700;
-  z-index:300;
-  animation:fadeIn 0.3s;
-}
+.modalbox{background:#1e1233;border-radius:20px;padding:20px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
+.close-btn{float:right;background:rgba(255,255,255,0.1);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(38,20,66,0.95);color:white;padding:12px 20px;border-radius:12px;font-weight:700;z-index:300;animation:fadeIn 0.3s;max-width:90%;text-align:center}
 @keyframes fadeIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+.rartag{font-size:10px;font-weight:900;text-transform:uppercase;color:#a855f7;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -240,13 +86,13 @@ h2{font-size:22px;margin:24px 0 16px;color:#e9d5ff}
 </div>
 
 <script>
-// НАСТРОЙКИ
+// ================= НАСТРОЙКИ =================
 const CHECK_SERVER = "https://skeletdrop-bot666.onrender.com";
 const CDN = "https://denzyve.github.io/cdn-telegram-gifts/assets/webp/";
 const FALLBACK = CDN + "gift_5170564780938756245.webp";
 const FALL = `onerror="this.src='${FALLBACK}'"`;
 
-// ДАННЫЕ
+// ================= ДАННЫЕ =================
 const gifts = [
   {id:"rocket",name:"Rocket",price:15,sell:10,rarity:"Обычный",image:CDN+"gift_5170564780938756245.webp"},
   {id:"bouquet",name:"Bouquet",price:25,sell:16,rarity:"Обычный",image:CDN+"gift_5170314324215857265.webp"},
@@ -274,7 +120,7 @@ const cases = [
   {name:"Кейс «Легенда»",price:300,gift:"snowman",image:gifts[5].image,x:100}
 ];
 
-// СОСТОЯНИЕ
+// ================= СОСТОЯНИЕ =================
 let state = {balance:0,collection:[],subscribed:false,name:"Игрок",avatar:"💀"};
 try{
   const saved = localStorage.getItem("skeletdropSave");
@@ -284,12 +130,29 @@ try{
 const money = v => Math.round(v||0).toLocaleString("ru-RU")+" ₽";
 const giftById = id => gifts.find(g=>g.id===id);
 
-// ОТРИСОВКА
+// ================= TELEGRAM INIT =================
+let tgInitData = "";
+if(window.Telegram && window.Telegram.WebApp){
+  try{
+    window.Telegram.WebApp.ready();
+    window.Telegram.WebApp.expand();
+    tgInitData = window.Telegram.WebApp.initData || "";
+    if(window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user){
+      const u = window.Telegram.WebApp.initDataUnsafe.user;
+      if(!localStorage.getItem("sd_profile_set")){
+        state.name = u.first_name || "Игрок";
+      }
+    }
+  }catch(e){console.error("TG init error:",e)}
+}
+console.log("✅ Telegram WebApp:", !!window.Telegram?.WebApp);
+console.log("✅ initData длина:", tgInitData.length);
+
+// ================= ОТРИСОВКА =================
 function render(){
   document.getElementById("balance").textContent = "🔵 "+money(state.balance);
   document.getElementById("avatarBtn").textContent = state.avatar;
   
-  // Игры
   document.getElementById("gamegrid").innerHTML = games.map((g,i)=>`
     <div class="gamecard" onclick="openGame(${i})">
       <img src="${g.image}" ${FALL}>
@@ -298,7 +161,6 @@ function render(){
     </div>
   `).join("");
   
-  // Кейсы
   document.getElementById("casegrid").innerHTML = cases.map((c,i)=>`
     <div class="casecard">
       <span class="xbadge">×${c.x}</span>
@@ -309,7 +171,6 @@ function render(){
     </div>
   `).join("");
   
-  // Коллекция
   if(state.collection.length===0){
     document.getElementById("collection").innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#b3a5d6">Коллекция пуста<br>Открой первый кейс!</div>';
   }else{
@@ -318,23 +179,23 @@ function render(){
       return `<div class="giftcard">
         <img src="${g.image}" ${FALL}>
         <h3>${g.name}</h3>
+        <div class="rartag">${g.rarity}</div>
         <button class="btn btn-secondary" onclick="sellGift(${i})">Продать ${money(g.sell)}</button>
       </div>`;
     }).join("");
   }
   
-  // Магазин
   document.getElementById("shop").innerHTML = gifts.map(g=>`
     <div class="giftcard">
       <img src="${g.image}" ${FALL}>
       <h3>${g.name}</h3>
+      <div class="rartag">${g.rarity}</div>
       <div class="price">${money(g.price)}</div>
       <button class="btn" onclick="buyGift('${g.id}')">Купить</button>
     </div>
   `).join("");
 }
 
-// ФУНКЦИИ
 function save(){
   localStorage.setItem("skeletdropSave",JSON.stringify(state));
   render();
@@ -369,6 +230,87 @@ function addMoney(sum){
   save();
 }
 
+// ================= ПОПОЛНЕНИЕ С ОТЛАДКОЙ =================
+function showDeposit(){
+  showModal(`
+    <h2>⭐ Пополнение</h2>
+    <p style="margin:16px 0;color:#b3a5d6">Выбери пакет звёзд:</p>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <button class="btn" onclick="payStars(25,50)">25 звёзд → 50 ₽</button>
+      <button class="btn" onclick="payStars(50,100)">50 звёзд → 100 ₽</button>
+      <button class="btn" onclick="payStars(125,250)">125 звёзд → 250 ₽</button>
+      <button class="btn" onclick="payStars(250,500)">250 звёзд → 500 ₽</button>
+    </div>
+    <p style="margin-top:16px;font-size:11px;color:#b3a5d6;text-align:center">
+      Сервер: ${CHECK_SERVER}<br>
+      initData: ${tgInitData ? '✅ есть ('+tgInitData.length+' симв.)' : '❌ нет'}
+    </p>
+  `);
+}
+
+async function payStars(stars,rub){
+  // Проверка 1: Telegram WebApp
+  if(!window.Telegram || !window.Telegram.WebApp){
+    alert("❌ Telegram WebApp не найден\nОткрой игру через бота, а не по прямой ссылке");
+    return;
+  }
+  
+  // Проверка 2: initData
+  if(!tgInitData){
+    alert("❌ initData пустой\nTelegram не передал данные авторизации\n\nОткрой игру через кнопку '🎮 Играть' в боте");
+    return;
+  }
+  
+  // Проверка 3: сервер
+  if(!CHECK_SERVER){
+    alert("❌ CHECK_SERVER не указан");
+    return;
+  }
+  
+  alert(`✅ Подготовка оплаты:\n⭐ ${stars} звёзд\n💰 ${rub} ₽\n🔗 ${CHECK_SERVER}\n📏 initData: ${tgInitData.length} симв.`);
+  
+  try{
+    const r = await fetch(CHECK_SERVER+"/api/invoice",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        initData: tgInitData,
+        pkg: "dep"+rub
+      })
+    });
+    
+    const text = await r.text();
+    alert("📡 Ответ сервера (статус "+r.status+"):\n"+text);
+    
+    const j = JSON.parse(text);
+    
+    if(!j.ok || !j.link){
+      alert("❌ Сервер вернул ошибку:\n"+JSON.stringify(j));
+      return;
+    }
+    
+    alert("✅ Счёт создан!\nСсылка: "+j.link+"\n\nОткрываю оплату...");
+    
+    window.Telegram.WebApp.openInvoice(j.link, status=>{
+      alert("💳 Статус оплаты: "+status);
+      if(status==="paid"){
+        addMoney(rub);
+        toast("+"+money(rub)+" ✅");
+        closeModal();
+      }else if(status==="cancelled"){
+        toast("Оплата отменена");
+      }else if(status==="failed"){
+        toast("Оплата не прошла");
+      }else{
+        toast("Статус: "+status);
+      }
+    });
+  }catch(e){
+    alert("❌ Ошибка:\n"+e.message+"\n\n"+e.stack);
+  }
+}
+
+// ================= КЕЙСЫ =================
 function openCase(i){
   const c = cases[i];
   if(c.price>0 && !pay(c.price)) return;
@@ -388,7 +330,7 @@ function sellGift(i){
   const g = giftById(state.collection[i]);
   state.collection.splice(i,1);
   addMoney(g.sell);
-  toast(`Продано за ${money(g.sell)}`);
+  toast("Продано за "+money(g.sell));
 }
 
 function buyGift(id){
@@ -396,50 +338,10 @@ function buyGift(id){
   if(!pay(g.price)) return;
   state.collection.push(g.id);
   save();
-  toast(`${g.name} куплен!`);
+  toast(g.name+" куплен!");
 }
 
-function showDeposit(){
-  showModal(`
-    <h2>⭐ Пополнение</h2>
-    <p style="margin:16px 0;color:#b3a5d6">Выбери пакет звёзд:</p>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <button class="btn" onclick="payStars(25,50)">25 звёзд → 50 ₽</button>
-      <button class="btn" onclick="payStars(50,100)">50 звёзд → 100 ₽</button>
-      <button class="btn" onclick="payStars(125,250)">125 звёзд → 250 ₽</button>
-      <button class="btn" onclick="payStars(250,500)">250 звёзд → 500 ₽</button>
-    </div>
-  `);
-}
-
-async function payStars(stars,rub){
-  if(!CHECK_SERVER){
-    toast("Сервер не подключён");
-    return;
-  }
-  try{
-    const r = await fetch(CHECK_SERVER+"/api/invoice",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,pkg:"dep"+rub})
-    });
-    const j = await r.json();
-    if(j.ok && j.link){
-      window.Telegram.WebApp.openInvoice(j.link,status=>{
-        if(status==="paid"){
-          addMoney(rub);
-          toast(`+${money(rub)} ✅`);
-          closeModal();
-        }
-      });
-    }else{
-      toast("Ошибка создания счёта");
-    }
-  }catch(e){
-    toast("Сервер недоступен");
-  }
-}
-
+// ================= ПРОФИЛЬ =================
 function showProfile(){
   showModal(`
     <h2>👤 Профиль</h2>
@@ -462,11 +364,13 @@ function setAvatar(e){
 
 function saveProfile(){
   state.name = document.getElementById("pfName").value || "Игрок";
+  localStorage.setItem("sd_profile_set","1");
   save();
   closeModal();
   toast("Профиль обновлён");
 }
 
+// ================= ИГРЫ =================
 function openGame(i){
   const g = games[i];
   showModal(`
@@ -477,6 +381,7 @@ function openGame(i){
   `);
 }
 
+// ================= НАВИГАЦИЯ =================
 function scrollToCases(){
   document.getElementById("casesTitle").scrollIntoView({behavior:"smooth"});
 }
@@ -484,13 +389,12 @@ function scrollToId(id){
   document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-// ЗАПУСК
-if(window.Telegram?.WebApp){
-  window.Telegram.WebApp.ready();
-  window.Telegram.WebApp.expand();
-}
-render();
+// ================= ЗАПУСК =================
 console.log("✅ Игра загружена");
+console.log("🔗 Сервер:", CHECK_SERVER);
+console.log("👤 Игрок:", state.name);
+console.log("💰 Баланс:", state.balance);
+render();
 </script>
 
 </body>
