@@ -381,8 +381,7 @@ h2 .chip{font-size:11px;font-weight:800;padding:5px 11px;border-radius:20px;colo
 
 <script>
 /* ================= НАСТРОЙКИ ================= */
-/* Адрес твоего сервера бота на Render — сюда же игра шлёт баланс и запросы оплаты */
-const CHECK_SERVER = "";
+const CHECK_SERVER = "https://skeletdrop-bot666.onrender.com";
 
 const TG_CHANNEL = "https://t.me/SkelwtDrop";
 const CDN = "https://denzyve.github.io/cdn-telegram-gifts/assets/webp/";
@@ -391,7 +390,6 @@ const FALL = `onerror="this.onerror=null;this.src='${FALLBACK}'"`;
 const SAVE_VERSION = 5;
 const START_BALANCE = 0;
 
-/* ---------- режим Telegram Mini App ---------- */
 const TGW = (window.Telegram && window.Telegram.WebApp) || null;
 const TG_MODE = !!(TGW && TGW.initData && CHECK_SERVER);
 if(TGW){
@@ -439,7 +437,6 @@ const cases = [
   {name:"Кейс «Легенда»",  price:300, gift:"snowman",  image:gifts[9].image, rc:"rar-legend", x:100}
 ];
 
-/* ================= СОСТОЯНИЕ ================= */
 function freshState(){
   return {v:SAVE_VERSION, balance:START_BALANCE, collection:[], lastFree:0,
           subscribed:false, name:"Игрок", avatar:"💀", payments:[]};
@@ -452,7 +449,6 @@ if(!Array.isArray(state.payments)) state.payments = [];
 state.balance = Math.round(Number(state.balance));
 if(isNaN(state.balance) || state.balance < 0) state.balance = START_BALANCE;
 
-/* в режиме Телеграма имя/аватар подтягиваем из аккаунта */
 if(TGW && TGW.initDataUnsafe && TGW.initDataUnsafe.user){
   const u = TGW.initDataUnsafe.user;
   if(!localStorage.getItem("sd_profile_set")){
@@ -541,7 +537,6 @@ function addMoney(sum){
   save();
 }
 
-/* ================= ПОПОЛНЕНИЕ ================= */
 function depositModal(){
   showModal(`
     <h2>⭐ Пополнение</h2>
@@ -594,7 +589,6 @@ async function payStars(code){
   const pkg = starPackages.find(p => p.code === code);
   if(!pkg) return;
 
-  /* --- внутри Телеграма: родное окно оплаты из игры --- */
   if(TG_MODE){
     try{
       const r = await fetch(CHECK_SERVER + "/api/invoice", {
@@ -618,7 +612,6 @@ async function payStars(code){
     return;
   }
 
-  /* --- вне Телеграма: старый путь через бота --- */
   toast("Открой игру в Телеграме, чтобы оплатить звёздами ⭐");
 }
 
@@ -641,7 +634,6 @@ async function activateCode(){
   }
 }
 
-/* ================= ВЫВОД ПОДАРКОВ ================= */
 function withdrawGift(id){
   const g = giftById(id); if(!g) return;
   showModal(`
@@ -660,7 +652,6 @@ function withdrawGift(id){
   `);
 }
 
-/* ================= ПРОФИЛЬ ================= */
 const emojis = ["💀","😎","🤑","👽","🤖","🎃","👻","🐺","🦊","🐸","🐼","🦄","👑","💎","🔥","⚡","🚀","🌟","🍀","🎯","🎮","🏆","🦴","🖤"];
 function profileModal(){
   showModal(`
@@ -688,7 +679,6 @@ function saveProfile(){
   toast("Профиль обновлён ✅");
 }
 
-/* ================= РЕНДЕР ================= */
 function renderGames(){
   document.getElementById("gamegrid").innerHTML = games.map((g,i) => `
     <div class="gamecard reveal" onclick="openGame(${i})">
@@ -790,7 +780,6 @@ function observeReveals(){
   document.querySelectorAll(".reveal:not(.on)").forEach(el => observer.observe(el));
 }
 
-/* ================= МОДАЛКИ ================= */
 function showModal(html){
   document.getElementById("modalcontent").innerHTML =
     `<button class="mclose" onclick="closeModal()">×</button>` + html;
@@ -801,7 +790,6 @@ document.getElementById("modal").addEventListener("click", e => {
   if(e.target.id === "modal") closeModal();
 });
 
-/* ================= КЕЙСЫ ================= */
 function openCase(index){
   const item = cases[index];
   if(item.free){
@@ -903,7 +891,6 @@ function buyGift(id){
   toast(`${g.name} добавлен в коллекцию!`);
 }
 
-/* ================= ИГРЫ ================= */
 let gameTimers = [];
 function stopGameLoops(){ gameTimers.forEach(clearInterval); gameTimers = []; }
 
@@ -919,7 +906,7 @@ function gameUpgrade(){
     <p class="muted">Поставь и попробуй апгрейднуть в подарок дороже.</p>
     <input class="ginput" id="upBet" type="number" min="5" value="20" placeholder="Ставка ₽">
     <div class="gscreen" id="upScreen">
-      <div style="font-size:44px">🎁 → </div>
+      <div style="font-size:44px">🎁 → 💎</div>
       <div class="muted">Выбери цель и жми «Апгрейд»</div>
     </div>
     <div class="grow">
@@ -1044,7 +1031,8 @@ function rocketStart(){
       multEl.textContent = "💥 ×" + rkState.crash.toFixed(2);
       multEl.style.color = "#ff6d8d";
       rocketEl.textContent = "💥"; rocketEl.style.transform = "none";
-      toast("Ракета взорвалась на ×" + rkState.crash.toFixed(2));
+      toast("Ракета взорвалась
+                  toast("Ракета взорвалась на ×" + rkState.crash.toFixed(2));
       document.getElementById("rkStart").disabled = false;
       document.getElementById("rkCash").disabled = true;
       rkState = null;
@@ -1230,4 +1218,4 @@ observeReveals();
 </script>
 
 </body>
-  </html>
+</html>
