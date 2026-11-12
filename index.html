@@ -398,6 +398,126 @@ for(let i=0;i<4;i++)renderLive();
 setInterval(renderLive,3800);
 setInterval(heroNext,5000);
 observeReveals();
+/* ================= ПРЯМАЯ ОПЛАТА ЗВЁЗДАМИ БОТУ ================= */
+const CHECK_SERVER = "https://skeletdrop-bot666.onrender.com";
+const TG_INIT = (window.Telegram && Telegram.WebApp && Telegram.WebApp.initData) || "";
+const PAY_PKGS = [
+  {code:"dep50",  stars:25,  rub:50,  tag:"Старт"},
+  {code:"dep100", stars:50,  rub:100, tag:"Хит"},
+  {code:"dep250", stars:125, rub:250, tag:"Выгодно"},
+  {code:"dep500", stars:250, rub:500, tag:"Максимум"}
+];
+
+async function api(path, body){
+  const r = await fetch(CHECK_SERVER + path, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(Object.assign({ initData: TG_INIT }, body||{}))
+  });
+  return await r.json();
+}
+
+async function tgLoad(){
+  if(!TG_INIT) return;
+  try{
+    const j = await api("/api/load");
+    if(j.ok && j.user){
+      state.balance    = Math.round(Number(j.user.balance))||0;
+      state.collection = Array.isArray(j.user.collection)?j.user.collection:[];
+      state.lastFree   = Number(j.user.lastFree)||0;
+      state.subscribed = !!j.user.subscribed;
+      state.name       = j.user.name || state.name;
+      state.avatar     = j.user.avatar || state.avatar;
+      localStorage.setItem("skeletdropSave", JSON.stringify(state));
+      render();
+    }
+  }catch(e){ console.log("load fail", e.message); }
+}
+
+function tgSave(){
+  if(!TG_INIT) return;
+  api("/api/save", { state:{
+    balance: state.balance, collection: state.collection,
+    lastFree: state.lastFree, subscribed: state.subscribed,
+    name: state.name, avatar: state.avatar
+  }}).catch(()=>{});
+}
+
+/* переопределяем save — теперь ещё и синхронит с сервером */
+function save(){
+  localStorage.setItem("skeletdropSave", JSON.stringify(state));
+  render();
+  tgSave();
+}
+
+function depositModal(){
+  showModal(`<h2>⭐ Пополнение</h2>
+  <div class="paytabs">
+    <button id="tabStar" class="on-star" onclick="switchTab('star')">⭐ Звёзды</button>
+    <button id="tabPromo" onclick="switchTab('promo')">🎟 Промокод</button>
+  </div>
+  <div id="starTab">
+    <p class="muted">${TG_INIT
+      ? "Оплата откроется прямо здесь, в Telegram. Баланс зачислится автоматически."
+      : "Открой игру через бота, чтобы оплатить звёздами."}</p>
+    ${PAY_PKGS.map(p=>`
+      <div class="starpkg" onclick="payStars('${p.code}')">
+        <div class="sp-l"><span class="sp-star">⭐</span>
+          <div><b>${p.stars} звёзд <span class="sp-tag">${p.tag}</span></b>
+          <small>официальная оплата Telegram</small></div>
+        </div><span class="sp-rub">+${p.rub} ₽</span>
+      </div>`).join("")}
+  </div>
+  <div id="promoTab" style="display:none">
+    <div class="promobox"><span class="promoicon">🎟</span>
+      <p class="muted">Введи промокод, если он у тебя есть.</p>
+      <input class="ginput" id="promoInput" placeholder="SD-XXXXXX" style="text-transform:uppercase">
+      <button class="btn" style="width:100%" onclick="activateCode()">Активировать</button>
+    </div>
+  </div>`);
+}
+
+async function payStars(code){
+  const pkg = PAY_PKGS.find(p=>p.code===code);
+  if(!pkg) return;
+  if(!TG_INIT){ toast("Открой игру через бота 🤖"); return; }
+  if(!Telegram.WebApp.openInvoice){ toast("Обнови Telegram до последней версии"); return; }
+
+  toast("Создаю счёт…");
+  let j;
+  try{ j = await api("/api/invoice", { pkg: code }); }
+  catch(e){ toast("Сервер просыпается, попробуй через 20 сек ⏳"); return; }
+
+  if(!j.ok || !j.link){ toast("Не удалось создать счёт"); return; }
+
+  Telegram.WebApp.openInvoice(j.link, async status => {
+    if(status === "paid"){
+      await tgLoad();
+      closeModal();
+      confetti(50);
+      toast(`Оплата прошла! +${money(pkg.rub)} ✅`);
+    } else if(status === "cancelled"){
+      toast("Оплата отменена");
+    } else if(status === "failed"){
+      toast("Оплата не прошла");
+    } else {
+      toast("Статус: " + status);
+    }
+  });
+}
+
+async function activateCode(){
+  const c = document.getElementById("promoInput").value.trim().toUpperCase();
+  if(c.length < 4) return toast("Введи промокод");
+  try{
+    const j = await api("/api/check", { code: c });
+    if(j.ok){ addMoney(j.rub); closeModal(); confetti(24); toast(`+${money(j.rub)} зачислено ✅`); }
+    else toast("Код не найден или уже использован");
+  }catch(e){ toast("Сервер недоступен, попробуй позже"); }
+}
+
+/* подтягиваем баланс с сервера при запуске */
+if(TG_INIT) tgLoad();
 </script>
 </body>
 </html>
