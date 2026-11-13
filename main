@@ -803,6 +803,271 @@ setInterval(heroNext,5200);
 setInterval(tickFree,1000);
 observeReveals();
 if(TG_INIT)tgLoad();
+<script>
+/* ===================== ПРОМОКОД 100 ₽ ===================== */
+PROMOS["STARDROP"]={rub:100,key:"used100"};
+PROMOS["SD-STARDROP"]={rub:100,key:"used100"};
+state.used100=!!state.used100;
+
+const _normCode=s=>String(s||"").toUpperCase().replace(/[\s\-_]+/g,"");
+async function activateCode(){
+ const inp=document.getElementById("promoInput");
+ const raw=(inp?inp.value:"").trim();
+ const c=_normCode(raw);
+ if(c.length<3)return toast("Введи промокод");
+ const local=PROMOS[c]||PROMOS[raw.toUpperCase()];
+ if(local){
+  if(state[local.key])return toast("Этот код уже использован");
+  state[local.key]=true;
+  addMoney(local.rub);closeModal();confetti(local.rub>1000?90:34);SFX.win();
+  toast("+"+money(local.rub)+" зачислено ✅");return;
+ }
+ try{
+  const j=await api("/api/check",{code:raw.toUpperCase()});
+  if(j.ok){addMoney(j.rub);closeModal();confetti(24);SFX.coin();toast("+"+money(j.rub)+" ✅");}
+  else toast("Код не найден или использован");
+ }catch(e){toast("Сервер недоступен");}
+}
+
+/* ===================== CRASH: КОСМИЧЕСКИЙ ПОЛЁТ ===================== */
+const CX_SCALE=62;
+let cx=null,cxRAF=0,cxHist=[];
+
+function cxStop(){cancelAnimationFrame(cxRAF);cxRAF=0;if(cx){cx.dead=true;cx=null;}}
+
+function gameCrash(){
+ cxStop();
+ showModal(`<h2>CRASH</h2><p class="muted">Ракета летит сквозь космос — забирай приз до взрыва!</p>
+ <input class="ginput" id="cBet" type="number" min="5" value="15">
+ <div class="cxspace" id="cxSpace">
+   <div class="cxneb"></div>
+   <div class="cxlayer" id="cxStars"></div>
+   <div class="cxplanet p1"></div>
+   <div class="cxplanet p2"></div>
+   <div class="cxstreak" id="cxStreak"></div>
+   <div class="cxgrid" id="cxGrid"></div>
+   <svg class="cxcurve" viewBox="0 0 100 100" preserveAspectRatio="none">
+     <defs><linearGradient id="cxg" x1="0" y1="1" x2="1" y2="0">
+       <stop offset="0" stop-color="#2689ff"/><stop offset=".55" stop-color="#a855f7"/><stop offset="1" stop-color="#ffd45d"/>
+     </linearGradient></defs>
+     <path id="cxPath" d="" fill="none" stroke="url(#cxg)" stroke-width="2.6" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+   </svg>
+   <div class="cxcraft" id="cxCraft">
+     <div class="cxflame" id="cxFlame"></div>
+     <div class="cxbody">🚀</div>
+   </div>
+   <div class="cxboom" id="cxBoom"></div>
+   <div class="cxmult" id="cxMult">×1.00</div>
+   <div class="cxstatus" id="cxStatus">ГОТОВ К СТАРТУ</div>
+ </div>
+ <div class="hist" id="cHist"></div>
+ <div class="muted" id="cMsg" style="text-align:center;margin:6px 0">Ставка и «Старт»</div>
+ <div class="grow"><button class="btn" id="cStart" onclick="crashStart()">🚀 Старт</button><button class="btn mint" id="cCash" onclick="crashCash()" disabled>Забрать</button></div>`);
+ cx={space:document.getElementById("cxSpace"),craft:document.getElementById("cxCraft"),
+     flame:document.getElementById("cxFlame"),path:document.getElementById("cxPath"),
+     mult:document.getElementById("cxMult"),status:document.getElementById("cxStatus"),
+     streak:document.getElementById("cxStreak"),grid:document.getElementById("cxGrid"),
+     boom:document.getElementById("cxBoom"),dead:false,active:false,bet:0,m:1,crash:1,t0:0,px:0};
+ cxBuildStars();cxHistRender();cxReset();
+}
+
+function cxBuildStars(){
+ const box=document.getElementById("cxStars");if(!box)return;
+ let h="";
+ for(let L=0;L<3;L++){
+  const n=[16,12,9][L],sz=[1,1.6,2.4][L],op=[.45,.7,1][L];
+  for(let i=0;i<n;i++){
+   h+=`<i class="cxst l${L}" style="left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;opacity:${op};animation-duration:${[3.4,2.2,1.3][L]}s;animation-delay:${-Math.random()*4}s"></i>`;
+  }
+ }
+ box.innerHTML=h;
+}
+function cxHistRender(){
+ const el=document.getElementById("cHist");if(!el)return;
+ el.innerHTML=cxHist.map(v=>`<span style="color:${v<1.5?"#ff5a6e":v<3?"#ffd45d":"#39dca0"}">×${v.toFixed(2)}</span>`).join("")
+  ||`<span style="color:var(--muted)">История после первого полёта</span>`;
+}
+function cxReset(){
+ if(!cx)return;
+ cx.space.classList.remove("flying","crashed");
+ cx.craft.style.left="12%";cx.craft.style.bottom="12%";
+ cx.craft.style.transform="translate(-50%,50%) rotate(-42deg)";
+ cx.craft.style.opacity="1";
+ cx.path.setAttribute("d","");
+ cx.mult.textContent="×1.00";cx.mult.style.color="#c4b5fd";
+ cx.status.textContent="ГОТОВ К СТАРТУ";cx.status.style.color="#b3a5d6";
+ cx.boom.style.opacity="0";
+ cx.grid.style.backgroundPosition="0 0";
+}
+function crashStart(){
+ if(!cx||cx.active)return;
+ const v=betOf("cBet");if(!v)return;
+ const crash=Math.random()<.30?1:Math.min(500,Math.max(1.01,.78/(1-Math.random())));
+ cx.bet=v;cx.crash=crash;cx.m=1;cx.active=true;cx.t0=performance.now();cx.px=0;
+ cx.space.classList.remove("crashed");cx.space.classList.add("flying");
+ cx.boom.style.opacity="0";
+ document.getElementById("cStart").disabled=true;
+ document.getElementById("cCash").disabled=false;
+ document.getElementById("cMsg").textContent="Полёт…";
+ cx.status.textContent="В ПОЛЁТЕ";cx.status.style.color="#39dca0";
+ SFX.click();tone(160,.5,"sawtooth",.07,520);
+ cxRAF=requestAnimationFrame(cxTick);
+}
+function cxTick(){
+ if(!cx||!cx.active)return;
+ const t=(performance.now()-cx.t0)/1000;
+ const m=Math.pow(1.075,t);
+ if(m>=cx.crash){cxEnd(false);return;}
+ cx.m=m;
+ const W=cx.space.clientWidth,H=cx.space.clientHeight;
+ const prog=Math.min(1,Math.log(m)/Math.log(14));
+ const x=12+prog*70;
+ const y=12+Math.pow(prog,.82)*66;
+ const wob=Math.sin(t*5.5)*1.6;
+ const ang=-42+Math.sin(t*3.2)*5+prog*10;
+ cx.craft.style.left=x+"%";
+ cx.craft.style.bottom=(y+wob*.3)+"%";
+ cx.craft.style.transform=`translate(-50%,50%) rotate(${ang}deg)`;
+ const fs=1+Math.min(1.5,(m-1)*.28)+Math.sin(t*26)*.14;
+ cx.flame.style.transform=`translateX(-50%) scaleY(${fs}) scaleX(${.9+Math.sin(t*31)*.12})`;
+ let d="M "+(12*W/100).toFixed(1)+" "+(H-12*H/100).toFixed(1);
+ const N=22;
+ for(let i=1;i<=N;i++){
+  const p=prog*i/N, mm=Math.exp(p*Math.log(14));
+  const xx=12+p*70, yy=12+Math.pow(p,.82)*66;
+  d+=" L "+(xx*W/100).toFixed(1)+" "+(H-yy*H/100).toFixed(1);
+ }
+ cx.path.setAttribute("d",d);
+ cx.mult.textContent="×"+m.toFixed(2);
+ cx.mult.style.color=m<2?"#c4b5fd":m<5?"#39dca0":m<10?"#ffd45d":"#ff9d5c";
+ cx.mult.style.transform=`scale(${1+Math.min(.22,(m-1)*.03)})`;
+ const spd=Math.min(260,(m-1)*46);
+ cx.px-=spd*.016;
+ cx.grid.style.backgroundPosition=cx.px+"px "+(cx.px*.4)+"px";
+ cx.streak.style.opacity=Math.min(.85,(m-1)*.16);
+ cx.space.style.setProperty("--warp",Math.min(1,(m-1)*.2));
+ if(m>2&&Math.random()<.3)cxSpark();
+ cxRAF=requestAnimationFrame(cxTick);
+}
+function cxSpark(){
+ if(!cx)return;
+ const s=document.createElement("span");
+ s.className="cxspark";
+ s.style.left=cx.craft.style.left;
+ s.style.bottom=cx.craft.style.bottom;
+ s.style.setProperty("--sx",(-30-Math.random()*60)+"px");
+ s.style.setProperty("--sy",(-10-Math.random()*40)+"px");
+ cx.space.appendChild(s);
+ setTimeout(()=>s.remove(),620);
+}
+function crashCash(){
+ if(!cx||!cx.active)return;
+ const p=Math.floor(cx.bet*cx.m);
+ addMoney(p);confetti(44);SFX.win();
+ document.getElementById("cMsg").innerHTML=`<b style="color:var(--mint)">Забрал ×${cx.m.toFixed(2)} = ${money(p)} 🚀</b>`;
+ cx.status.textContent="ПРИЗ ЗАБРАН";cx.status.style.color="#39dca0";
+ cxEnd(true);
+}
+function cxEnd(cashed){
+ if(!cx)return;
+ cx.active=false;cancelAnimationFrame(cxRAF);cxRAF=0;
+ cxHist.unshift(cx.crash);cxHist=cxHist.slice(0,8);cxHistRender();
+ document.getElementById("cStart").disabled=false;
+ document.getElementById("cCash").disabled=true;
+ cx.space.classList.remove("flying");
+ cx.mult.textContent="×"+cx.crash.toFixed(2);
+ cx.mult.style.transform="scale(1)";
+ if(!cashed){
+  cx.space.classList.add("crashed");
+  cx.mult.style.color="#ff5a6e";
+  cx.status.textContent="РАКЕТА ВЗОРВАЛАСЬ";cx.status.style.color="#ff5a6e";
+  cx.craft.style.opacity="0";
+  cx.boom.style.left=cx.craft.style.left;
+  cx.boom.style.bottom=cx.craft.style.bottom;
+  cx.boom.style.opacity="1";
+  cx.boom.classList.remove("go");void cx.boom.offsetWidth;cx.boom.classList.add("go");
+  for(let i=0;i<14;i++)cxDebris();
+  SFX.boom();
+  document.getElementById("cMsg").innerHTML=`<b style="color:var(--red)">💥 Взрыв на ×${cx.crash.toFixed(2)}</b>`;
+ }else{
+  cx.craft.style.transition="left .9s ease-in, bottom .9s ease-in, opacity .9s";
+  cx.craft.style.left="118%";cx.craft.style.bottom="96%";cx.craft.style.opacity="0";
+  setTimeout(()=>{if(cx){cx.craft.style.transition="";}},950);
+ }
+}
+function cxDebris(){
+ if(!cx)return;
+ const d=document.createElement("span");
+ d.className="cxdebris";
+ d.style.left=cx.craft.style.left;
+ d.style.bottom=cx.craft.style.bottom;
+ d.style.background=["#ffd45d","#ff9d5c","#ff5a6e","#fff"][Math.floor(Math.random()*4)];
+ d.style.setProperty("--dx",(Math.random()*160-80)+"px");
+ d.style.setProperty("--dy",(Math.random()*-120-20)+"px");
+ cx.space.appendChild(d);
+ setTimeout(()=>d.remove(),900);
+}
+const _stopOld=stopGameLoops;
+stopGameLoops=function(){_stopOld();cxStop();};
+</script>
+
+<style>
+.cxspace{position:relative;height:210px;border-radius:16px;overflow:hidden;margin:10px 0;
+  background:radial-gradient(120% 90% at 78% 8%,#3b2a6e 0%,#1b1030 45%,#0a0616 100%);
+  border:1px solid #a855f766;box-shadow:inset 0 0 40px #000a}
+.cxneb{position:absolute;inset:-20%;pointer-events:none;
+  background:radial-gradient(40% 40% at 72% 22%,rgba(168,85,247,.35),transparent 70%),
+             radial-gradient(35% 35% at 22% 72%,rgba(38,137,255,.28),transparent 70%);
+  filter:blur(6px);animation:cxneb 14s ease-in-out infinite alternate}
+@keyframes cxneb{to{transform:translate3d(-8px,6px,0) scale(1.08)}}
+.cxlayer{position:absolute;inset:0;pointer-events:none}
+.cxst{position:absolute;border-radius:50%;background:#fff;display:block}
+.cxspace.flying .cxst{animation:cxstar linear infinite}
+@keyframes cxstar{from{transform:translate3d(0,0,0)}to{transform:translate3d(-120px,52px,0)}}
+.cxplanet{position:absolute;border-radius:50%;pointer-events:none;opacity:.85}
+.cxplanet.p1{width:54px;height:54px;right:-14px;top:16px;
+  background:radial-gradient(circle at 34% 30%,#93c5fd,#3b82f6 58%,#1e3a8a);
+  box-shadow:0 0 22px #3b82f655,inset -6px -6px 12px #0006}
+.cxplanet.p2{width:26px;height:26px;left:14px;bottom:18px;
+  background:radial-gradient(circle at 36% 32%,#f9a8d4,#db2777 60%,#701a3b);
+  box-shadow:0 0 16px #db277755}
+.cxspace.flying .cxplanet.p1{animation:cxd1 9s linear infinite}
+.cxspace.flying .cxplanet.p2{animation:cxd2 6s linear infinite}
+@keyframes cxd1{from{transform:translate(0,0)}to{transform:translate(-40px,26px)}}
+@keyframes cxd2{from{transform:translate(0,0)}to{transform:translate(-56px,34px)}}
+.cxgrid{position:absolute;inset:0;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(168,85,247,.5) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(168,85,247,.5) 1px,transparent 1px);
+  background-size:34px 34px}
+.cxstreak{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:repeating-linear-gradient(115deg,transparent 0 12px,rgba(255,255,255,.14) 12px 13px,transparent 13px 26px)}
+.cxcurve{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:drop-shadow(0 0 6px #a855f7aa)}
+.cxcraft{position:absolute;left:12%;bottom:12%;transform:translate(-50%,50%) rotate(-42deg);
+  transform-origin:center;will-change:left,bottom,transform;z-index:4}
+.cxbody{font-size:34px;filter:drop-shadow(0 0 12px #ffd45daa)}
+.cxflame{position:absolute;left:50%;top:26px;width:12px;height:34px;transform:translateX(-50%);
+  transform-origin:top center;border-radius:0 0 60% 60%;
+  background:linear-gradient(#fffbeb,#fbbf24 32%,#f97316 66%,rgba(239,68,68,0));
+  filter:blur(1.2px);opacity:.95}
+.cxspace:not(.flying) .cxflame{height:12px;opacity:.4}
+.cxmult{position:absolute;top:9px;left:0;right:0;text-align:center;font-size:34px;font-weight:900;
+  text-shadow:0 0 22px #a855f7;transition:color .2s;z-index:5;pointer-events:none}
+.cxstatus{position:absolute;bottom:7px;left:0;right:0;text-align:center;font-size:9px;font-weight:900;
+  letter-spacing:2px;z-index:5;pointer-events:none}
+.cxboom{position:absolute;width:12px;height:12px;margin:-6px;border-radius:50%;opacity:0;z-index:6;
+  background:radial-gradient(circle,#fff,#ffd45d 35%,#ff5a6e 65%,transparent 72%)}
+.cxboom.go{animation:cxboom .6s ease-out forwards}
+@keyframes cxboom{0%{transform:scale(.4);opacity:1}60%{transform:scale(9);opacity:.85}100%{transform:scale(13);opacity:0}}
+.cxspace.crashed{animation:cxshake .5s}
+@keyframes cxshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.cxspace.crashed::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#ff5a6e44,transparent 70%);pointer-events:none}
+.cxspark{position:absolute;width:4px;height:4px;margin:-2px;border-radius:50%;background:#ffd45d;
+  box-shadow:0 0 8px #ffd45d;pointer-events:none;z-index:3;animation:cxspark .6s ease-out forwards}
+@keyframes cxspark{to{transform:translate(var(--sx),var(--sy)) scale(.2);opacity:0}}
+.cxdebris{position:absolute;width:5px;height:5px;margin:-2.5px;border-radius:2px;pointer-events:none;z-index:6;
+  animation:cxdebris .85s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes cxdebris{to{transform:translate(var(--dx),var(--dy)) rotate(320deg);opacity:0}}
+</style>
 </script>
 </body>
 </html>
