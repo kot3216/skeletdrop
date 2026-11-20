@@ -1003,5 +1003,16 @@ hideLoader()}).catch(function(){hideLoader()})}
 try{shown=D.bal;Farm.sync();paintLoader();build(FB);sv0();reveal();loadCat();engRound();setInterval(pFeed,3600);if(TGI)pull();setTimeout(hideLoader,LOAD_MAX)}
 catch(e){console.error(e);hideLoader();document.querySelectorAll(".rz").forEach(function(x){x.classList.add("in")})}
 </script>
+<style>
+/* ФИКС: убирает бешеное мерцание при "Уменьшении движения" */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation:none!important;
+    animation-duration:0s!important;
+    animation-iteration-count:1!important;
+    transition-duration:.15s!important;
+  }
+}
+</style>
 </body>
 </html>
