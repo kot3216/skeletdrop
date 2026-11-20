@@ -365,10 +365,10 @@ input[type=range].rng::-webkit-slider-runnable-track{height:18px;background:tran
 .hd .mx{display:block;font-size:13px;font-weight:900;margin-top:3px;color:var(--am)}
 .hd.g{border-color:rgba(63,214,140,.3)}.hd.g .ar{color:var(--gn)}.hd.g.on{background:rgba(63,214,140,.22);border-color:var(--gn)}
 .hd.l{border-color:rgba(255,107,129,.3)}.hd.l .ar{color:var(--rd)}.hd.l.on{background:rgba(255,107,129,.22);border-color:var(--rd)}
-.bnd{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.bn{border:1px solid rgba(255,201,77,.32);border-radius:12px;padding:12px 4px;cursor:pointer;text-align:center;background:rgba(255,201,77,.12)}
+.bnd{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.bn{border:1px solid rgba(255,201,77,.32);border-radius:12px;padding:14px 4px;cursor:pointer;text-align:center;background:rgba(255,201,77,.12)}
 .bn:active{transform:scale(.96)}
-.bn .s{font-size:15px;font-weight:900;color:var(--am)}.bn .r{font-size:10px;font-weight:900;color:var(--gn)}
+.bn .s{font-size:16px;font-weight:900;color:var(--am)}.bn .r{font-size:10px;font-weight:900;color:var(--gn)}
 .sub{text-align:center;padding:13px 11px;border-radius:14px;background:rgba(45,51,59,.5);border:1px solid var(--ln)}
 .sub .ic{font-size:32px}.sub h3{font-size:13.5px;margin:6px 0 4px;color:var(--am)}
 .sub p{font-size:10.5px;color:var(--dm);margin:0;font-weight:700;line-height:1.45}
@@ -496,7 +496,7 @@ var $=function(i){return document.getElementById(i)};
 var API="https://skeletdrop-bot666.onrender.com",CH="https://t.me/SkelwtDrop";
 var README="https://raw.githubusercontent.com/Kabachkoov/Telegram-Gift_id/main/README.md";
 var CDN="https://denzyve.github.io/cdn-telegram-gifts/assets/webp/gift_";
-var KEY="sd_v24",CATK="tg_cat_v2",DAY=864e5,MIN=1,FR=.001,FMIN=1,FARM_TAG="@SkeletDropPayBot";
+var KEY="sd_v25",CATK="tg_cat_v2",DAY=864e5,MIN=1,FR=.001,FMIN=1,FARM_TAG="@SkeletDropPayBot";
 var REF_BASE="https://t.me/SkeletDropPayBot?start=ref";
 var ROCKET_TILT=Math.round(Math.atan2(205,160)*180/Math.PI)-14;
 var LOAD_MIN=3800,LOAD_MAX=7000,BET_MS=6500,COUNT_MS=3000,WAIT_MS=3600;
@@ -513,7 +513,8 @@ var CASES=[
 {name:"Легендарный",tier:"Легендарный",price:1600,g:["Valentine Box","Genie Lamp","Cupid Charm","Mood Pack","Homemade Cake","Toy Bear","Gem Signet","Swag Bag","Love Potion","Snoop Cigar","Top Hat","Diamond Ring"]},
 {name:"Мифический",tier:"Мифический",price:4200,g:["Ionic Dryer","Neko Helmet","Loot Bag","Khabib's Papakha","Bling Binky","Bonded Ring","Rare Bird","Low Rider","Westside Sign","Perfume Bottle"]}];
 var PROMOS={STARDROP:{g:50,f:"p1"},SDSTARDROP:{g:50,f:"p1"},SDBONUS507X4K2M9P:{g:25,f:"p2"},SD7KQ92XW48MZP5RTN3VJH9QKD4TZE:{g:50000,f:"p3"},ALANHUILAN:{g:100,f:"p4"}};
-var PACKS=[{k:"s1",s:1},{k:"s10",s:10},{k:"s25",s:25},{k:"s50",s:50},{k:"s250",s:250}];
+/* ДОНАТ: только 25 / 50 / 125 / 250 */
+var PACKS=[{k:"dep50",s:25},{k:"dep100",s:50},{k:"dep250",s:125},{k:"dep500",s:250}];
 var TGW=(window.Telegram&&window.Telegram.WebApp)||null,TGI=(TGW&&TGW.initData)||"";
 if(TGW){try{TGW.ready();TGW.expand();TGW.setHeaderColor("#0d1117");TGW.setBackgroundColor("#0d1117")}catch(e){}}
 function uri(s){return "data:image/svg+xml;charset=utf8,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'>"+s+"</svg>")}
@@ -633,7 +634,7 @@ function hist(el,a,f){var n=$(el);if(n)n.innerHTML=a.length?a.map(f).join(""):'<
 function win(v,m,el){add(v);stat("g",v);conf(v>=200?36:18);FX.win();hap("w");if(el)el.innerHTML='<b style="color:var(--gn)">'+m+'</b>'}
 function back(v,m,el){add(v);stat("g",0);FX.coin();hap("t");if(el)el.innerHTML='<b style="color:var(--am)">'+m+'</b>'}
 function lose(m,el){stat("g",0);FX.fail();hap("l");if(el)el.innerHTML='<b style="color:var(--rd)">'+m+'</b>'}
-function api(p,b){var c=new AbortController(),t=setTimeout(function(){c.abort()},9000);return fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({initData:TGI},b||{})),signal:c.signal}).then(function(r){clearTimeout(t);return r.json()}).catch(function(){clearTimeout(t);return null})}
+function api(p,b,ms){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||12000);return fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({initData:TGI},b||{})),signal:c.signal}).then(function(r){clearTimeout(t);return r.json()}).catch(function(){clearTimeout(t);return null})}
 function pull(){if(!TGI)return;api("/api/load").then(function(j){if(j&&j.ok&&j.user){var u=clean({bal:j.user.balance,bag:j.user.collection,freeAt:j.user.lastFree,sub:j.user.subscribed,name:j.user.name,photo:D.photo,p1:D.p1,p2:D.p2,p3:D.p3,p4:D.p4,facc:D.facc,fts:D.fts,ftot:D.ftot,ts:j.user.updatedAt,st:D.st});
 if(u&&u.ts>=D.ts){u.p1=D.p1;u.p2=D.p2;u.p3=D.p3;u.p4=D.p4;u.st=D.st;u.photo=D.photo;u.facc=D.facc;u.fts=D.fts;u.ftot=D.ftot;D=u;sv0();paint()}else push()}})}
 function push(){if(!TGI)return;api("/api/save",{state:{balance:D.bal,collection:D.bag,lastFree:D.freeAt,name:D.name,updatedAt:D.ts}})}
@@ -677,11 +678,20 @@ var w=$("fWho");if(w)w.innerHTML=u?("Имя: <b>"+(u.first_name||"—")+'</b><br
 claim:function(){Farm.sync();if(!Farm.ok())return toast("Добавь @SkeletDropPayBot в имя","l");if(D.facc<FMIN)return toast("Минимум "+FMIN+" ⭐");
 var v=Math.floor(D.facc);D.facc=r3(D.facc-v);D.ftot=r2(D.ftot+v);add(v);Farm.paint();conf(24);FX.coin();hap("w");toast("+"+v+" ⭐ с фарма","w")}};
 setInterval(function(){Farm.sync();if(!document.hidden)Farm.paint()},1000);
-var Dep={open:function(){FX.tap();sheet('<h2>⭐ Пополнение</h2><div class="lb">Оплата звёздами Telegram · 1:1</div><div class="bnd">'+PACKS.map(function(p){return '<div class="bn" onclick="Dep.buy(\''+p.k+'\')"><div class="s">⭐ '+p.s+'</div><div class="r">+'+p.s+'</div></div>'}).join("")+'</div><div class="lb">Промокод</div><input class="fd" id="pf" placeholder="STAR DROP" style="text-transform:uppercase"><button class="act gh blk" onclick="Dep.promo()">Активировать</button>')},
-buy:function(k){var p=null,i;for(i=0;i<PACKS.length;i++)if(PACKS[i].k==k)p=PACKS[i];if(!p)return;
+var Dep={open:function(){FX.tap();sheet('<h2>⭐ Пополнение</h2><div class="lb">Оплата звёздами Telegram · 1:1</div><div class="bnd">'+PACKS.map(function(p){return '<div class="bn" onclick="Dep.buy(\''+p.k+'\','+p.s+')"><div class="s">⭐ '+p.s+'</div><div class="r">+'+p.s+' ⭐</div></div>'}).join("")+'</div><div class="lb">Промокод</div><input class="fd" id="pf" placeholder="STAR DROP" style="text-transform:uppercase"><button class="act gh blk" onclick="Dep.promo()">Активировать</button><div class="ms" id="depMsg"></div>')},
+buy:function(k,stars){var p=null,i;for(i=0;i<PACKS.length;i++)if(PACKS[i].k==k)p=PACKS[i];if(!p)return;
 if(!TGI)return toast("Открой игру через бота");if(!TGW.openInvoice)return toast("Обнови Telegram");
-toast("Создаю счёт…");api("/api/invoice",{pkg:k,stars:p.s}).then(function(j){if(!j||!j.ok||!j.link)return toast("Оплата пока недоступна");
-TGW.openInvoice(j.link,function(s){if(s=="paid"){setTimeout(function(){pull();closeM();conf(44);FX.win();hap("w");toast("+"+p.s+" ⭐","w")},1200)}else if(s=="cancelled")toast("Отменено");else if(s=="failed")toast("Не прошла","l")})})},
+var m=$("depMsg");if(m)m.textContent="Создаю счёт… сервер может просыпаться";
+toast("Создаю счёт…");
+api("/api/invoice",{pkg:k,stars:p.s},60000).then(function(j){
+if(j&&j.ok&&j.link){if(m)m.textContent="Открываю оплату…";
+TGW.openInvoice(j.link,function(s){if(s=="paid"){setTimeout(function(){pull();closeM();conf(44);FX.win();hap("w");toast("+"+p.s+" ⭐","w")},1400)}else if(s=="cancelled")toast("Отменено");else if(s=="failed")toast("Не прошла","l")});return}
+var e=(j&&j.error)||"нет связи",t;
+if(e=="pkg")t="На Render старый bot.js — обнови";
+else if(e=="no_token")t="На Render не задан BOT_TOKEN";
+else if(e=="auth")t="Открой игру через бота";
+else t="Сервер не отвечает — Render спит";
+if(m)m.innerHTML='<b style="color:var(--rd)">'+t+'</b>';toast(t,"l")})},
 promo:function(){var e=$("pf"),raw=(e?e.value:"").trim(),n=raw.toUpperCase().replace(/[\s\-_]+/g,"");if(n.length<3)return toast("Введи код");
 var h=PROMOS[n];if(h){if(D[h.f])return toast("Уже использован","l");D[h.f]=1;add(h.g);closeM();conf(h.g>1000?70:26);FX.win();hap("w");return toast("+"+ns(h.g)+" ⭐","w")}
 api("/api/check",{code:raw.toUpperCase()}).then(function(j){if(j&&j.ok){var v=j.stars!=null?j.stars:Math.round((j.gram||0)/.012);add(v);closeM();conf(20);FX.coin();toast("+"+ns(v)+" ⭐","w")}else toast("Код не найден","l")}).catch(function(){})}};
@@ -691,7 +701,7 @@ function cart(c){var gs=caseGifts(c).slice(0,4),n=gs.length,h='<div class="gw"><
 for(i=0;i<n;i++){var o=i-(n-1)/2;h+='<img src="'+gs[i].img+'" '+fb()+' style="left:calc(50% + '+(o*22)+'px - 22px);transform:rotate('+(o*9)+'deg) scale('+(1-Math.abs(o)*.08).toFixed(2)+');z-index:'+(20-Math.round(Math.abs(o)*3))+'">'}
 return '<div class="art">'+h+'</div></div>'}
 function paintC(){$("cC").textContent=CASES.length;$("cG").innerHTML=CASES.map(function(c,i){var w=c.free?fl():0,t=TIER[c.tier];
-return '<div class="case rz" style="--tc:'+t+'" onclick="Vault.open('+i+')"><span class="tr">'+c.tier+'</span><span class="nf">'+(c.free?"⭐":caseGifts(c).length+' NFT')+'</span>'+cart(c)+'<div class="cft"><h3>'+c.name+'</h3><div class="prc'+(c.free?" free":"")+'">'+(c.free?(w>0?"⏳ "+hms(w):"FREE"):"⭐ "+ns(c.price))+'</div></div></div>'}).join("")}
+return '<div class="case rz" style="--tc:'+t+'" onclick="Vault.open('+i+')"><span class="tr">'+c.tier+'</span><span class="nf">'+caseGifts(c).length+' NFT</span>'+cart(c)+'<div class="cft"><h3>'+c.name+'</h3><div class="prc'+(c.free?" free":"")+'">'+(c.free?(w>0?"⏳ "+hms(w):"FREE"):"⭐ "+ns(c.price))+'</div></div></div>'}).join("")}
 function paintI(){var b=$("iG");$("iC").textContent=D.bag.length;
 if(!D.bag.length){b.innerHTML='<div class="emp">Пусто — открой кейс 🎁</div>';return}
 b.innerHTML=D.bag.slice(0,120).map(function(nm,i){var g=BY[nm];if(!g)return "";var t=TIER[g.gr];
@@ -712,9 +722,9 @@ view:function(i){var c=CASES[i],t=TIER[c.tier],L=caseLoot(c),tot=0,k;for(k=0;k<L
 var rows=L.map(function(l){return{e:l[1],v:lv(l[1])}}).sort(function(a,b){return b.v-a.v}),mx=rows[0].v,cs="",j,x;
 for(j=0;j<16;j++){x=tile(roll(L));cs+='<div class="cl"><img src="'+x.i+'" '+fb()+'><span>'+x.t+'</span></div>'}
 var ok=c.free?D.sub:D.bal>=c.price;
-sheet('<h2>'+c.name+' кейс</h2><div class="ch" style="--tc:'+t+'"><div><div class="n">'+c.name+'</div><div class="t">'+c.tier+(c.free?"":" · "+caseGifts(c).length+" NFT")+'</div></div><div class="p">'+(c.free?"FREE":"⭐ "+ns(c.price))+'</div></div><div class="strip"><div class="ndl"></div><div class="trk">'+cs+'</div></div><button class="act blk'+(c.free?" gr2":" gd")+'" onclick="Vault.go('+i+')"'+(ok?"":" disabled")+'>'+(ok?(c.free?"🎁 Открыть бесплатно":"Открыть за "+ns(c.price)+" ⭐"):(c.free?"Нужна подписка на канал":"Не хватает "+ns(c.price-D.bal)+" ⭐"))+'</button><div class="lb">Может выпасть</div><div class="dps" style="--tc:'+t+'">'+rows.map(function(r){var x=tile(r.e);return '<div class="dp'+(r.v==mx?" best":"")+'"><img src="'+x.i+'" '+fb()+'><div class="n">'+x.t+'</div><div class="v">'+(r.v?ns(r.v)+" ⭐":"—")+'</div></div>'}).join("")+'</div>',1)},
+sheet('<h2>'+c.name+' кейс</h2><div class="ch" style="--tc:'+t+'"><div><div class="n">'+c.name+'</div><div class="t">'+c.tier+' · '+caseGifts(c).length+' NFT</div></div><div class="p">'+(c.free?"FREE":"⭐ "+ns(c.price))+'</div></div><div class="strip"><div class="ndl"></div><div class="trk">'+cs+'</div></div><button class="act blk'+(c.free?" gr2":" gd")+'" onclick="Vault.go('+i+')"'+(ok?"":" disabled")+'>'+(ok?(c.free?"🎁 Открыть бесплатно":"Открыть за "+ns(c.price)+" ⭐"):(c.free?"Нужна подписка на канал":"Не хватает "+ns(c.price-D.bal)+" ⭐"))+'</button><div class="lb">Может выпасть</div><div class="dps" style="--tc:'+t+'">'+rows.map(function(r){var x=tile(r.e);return '<div class="dp'+(r.v==mx?" best":"")+'"><img src="'+x.i+'" '+fb()+'><div class="n">'+x.t+'</div><div class="v">'+(r.v?ns(r.v)+" ⭐":"—")+'</div></div>'}).join("")+'</div>',1)},
 go:function(i){var c=CASES[i];if(c.free){if(fl()>0)return toast("Бесплатный кейс будет доступен через "+hms(fl()),"l");if(!D.sub)return Vault.gate(i);return Vault.spin(c,i)}if(!take(c.price))return;Vault.spin(c,i)},
-gate:function(i){sheet('<h2>🎁 Бесплатный кейс</h2><div class="sub"><span class="ic">📢</span><h3>Подпишись на канал</h3><p>Открой <b>@SkelwtDrop</b>, затем нажми «Проверить».<br>Бесплатный кейс доступен раз в 24 часа.</p></div><div class="stp" id="s1"><div class="sn">1</div><div class="st">Канал @SkelwtDrop<small id="s1t">'+(D.subClick?"канал открыт":"нажми «Открыть»")+'</small></div><button class="act sm" onclick="Vault.openCh()">Открыть</button></div><button class="act gd blk" id="gChk" onclick="Vault.checkSub('+i+')">🔍 Проверить</button><button class="act gh blk" onclick="Vault.view('+i+')">Назад</button>')},
+gate:function(i){sheet('<h2>🎁 Бесплатный кейс</h2><div class="sub"><span class="ic">📢</span><h3>Подпишись на канал</h3><p>Открой <b>@SkelwtDrop</b>, затем нажми «Проверить».<br>Бесплатный кейс доступен раз в 24 часа.</p></div><div class="stp'+(D.subClick?" done":"")+'" id="s1"><div class="sn">'+(D.subClick?"✓":"1")+'</div><div class="st">Канал @SkelwtDrop<small id="s1t">'+(D.subClick?"канал открыт":"нажми «Открыть»")+'</small></div><button class="act sm" onclick="Vault.openCh()">Открыть</button></div><button class="act gd blk" id="gChk" onclick="Vault.checkSub('+i+')">🔍 Проверить</button><button class="act gh blk" onclick="Vault.view('+i+')">Назад</button>')},
 openCh:function(){tg(CH);D.subClick=1;sv0();var e=$("s1");if(e){e.className="stp done";e.querySelector(".sn").textContent="✓";$("s1t").textContent="канал открыт"}FX.tap()},
 checkSub:function(i){if(!D.subClick){toast("Сначала нажми «Открыть»","l");return}
 var b=$("gChk");b.disabled=1;b.innerHTML='<span class="spn"></span> Проверяем…';
@@ -992,46 +1002,6 @@ if(out.length>=40){try{localStorage.setItem(CATK,JSON.stringify(out))}catch(e){}
 hideLoader()}).catch(function(){hideLoader()})}
 try{shown=D.bal;Farm.sync();paintLoader();build(FB);sv0();reveal();loadCat();engRound();setInterval(pFeed,3600);if(TGI)pull();setTimeout(hideLoader,LOAD_MAX)}
 catch(e){console.error(e);hideLoader();document.querySelectorAll(".rz").forEach(function(x){x.classList.add("in")})}
-/* ═══ ФИКС ОПЛАТЫ — вставить перед </script> ═══ */
-function apiLong(p,b,ms){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||60000);
-return fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({initData:TGI},b||{})),signal:c.signal}).then(function(r){clearTimeout(t);return r.json()}).catch(function(){clearTimeout(t);return null})}
-
-Dep.open=function(){FX.tap();sheet('<h2>⭐ Пополнение</h2><div class="lb">Оплата звёздами Telegram · 1:1</div><div class="bnd">'+PACKS.map(function(p){return '<div class="bn" onclick="Dep.buy(\''+p.k+'\')"><div class="s">⭐ '+p.s+'</div><div class="r">+'+p.s+'</div></div>'}).join("")+'</div><div class="lb">Промокод</div><input class="fd" id="pf" placeholder="STAR DROP" style="text-transform:uppercase"><button class="act gh blk" onclick="Dep.promo()">Активировать</button><button class="act gh blk" onclick="Dep.diag()">🩺 Проверить сервер</button><div class="ms" id="depMsg"></div>')};
-
-Dep.diag=function(){var m=$("depMsg");if(m)m.textContent="Пингуем сервер…";
-fetch(API,{method:"GET"}).then(function(r){return r.json()}).then(function(j){
-if(!m)return;
-if(j&&j.packs&&j.packs.indexOf("s1")>=0)m.innerHTML='<b style="color:var(--gn)">Сервер новый ✅ токен: '+(j.token?"есть":"НЕТ!")+'</b>';
-else if(j&&j.ok)m.innerHTML='<b style="color:var(--rd)">На Render СТАРЫЙ bot.js — обнови его</b>';
-else m.innerHTML='<b style="color:var(--rd)">Сервер ответил непонятно</b>';
-}).catch(function(){if(m)m.innerHTML='<b style="color:var(--rd)">Сервер не отвечает (Render спит или упал)</b>'})};
-
-Dep.buy=function(k){
-var p=null,i;for(i=0;i<PACKS.length;i++)if(PACKS[i].k==k)p=PACKS[i];if(!p)return;
-if(!TGI)return toast("Открой игру через бота, не через браузер","l");
-if(!TGW||!TGW.openInvoice)return toast("Обнови Telegram — старая версия","l");
-var m=$("depMsg");
-function attempt(n){
-if(m)m.innerHTML="Создаю счёт… попытка "+n+" из 3<br><small>сервер может просыпаться до 60 сек</small>";
-toast(n===1?"Создаю счёт…":"Пробую ещё раз…");
-apiLong("/api/invoice",{pkg:k,stars:p.s},60000).then(function(j){
-if(j&&j.ok&&j.link){
-if(m)m.innerHTML='<b style="color:var(--gn)">Счёт готов, открываю оплату</b>';
-TGW.openInvoice(j.link,function(s){
-if(s=="paid"){setTimeout(function(){pull();closeM();conf(44);FX.win();hap("w");toast("+"+p.s+" ⭐","w")},1200)}
-else if(s=="cancelled")toast("Оплата отменена");
-else if(s=="failed")toast("Оплата не прошла","l");});
-return}
-if(n<3){setTimeout(function(){attempt(n+1)},2500);return}
-var e=(j&&j.error)||"нет связи",txt;
-if(e=="pkg")txt="На Render старый bot.js — залей новый";
-else if(e=="no_token")txt="На Render не задан BOT_TOKEN";
-else if(e=="tg")txt="Telegram отклонил счёт: "+((j&&j.msg)||"");
-else if(e=="auth")txt="Открой игру через бота";
-else txt="Сервер не ответил. Зайди на Render → Manual Deploy";
-if(m)m.innerHTML='<b style="color:var(--rd)">'+txt+'</b>';
-toast(txt,"l");hap("l");})}
-attempt(1)};
 </script>
 </body>
 </html>
