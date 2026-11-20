@@ -992,6 +992,46 @@ if(out.length>=40){try{localStorage.setItem(CATK,JSON.stringify(out))}catch(e){}
 hideLoader()}).catch(function(){hideLoader()})}
 try{shown=D.bal;Farm.sync();paintLoader();build(FB);sv0();reveal();loadCat();engRound();setInterval(pFeed,3600);if(TGI)pull();setTimeout(hideLoader,LOAD_MAX)}
 catch(e){console.error(e);hideLoader();document.querySelectorAll(".rz").forEach(function(x){x.classList.add("in")})}
+/* ═══ ФИКС ОПЛАТЫ — вставить перед </script> ═══ */
+function apiLong(p,b,ms){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||60000);
+return fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({initData:TGI},b||{})),signal:c.signal}).then(function(r){clearTimeout(t);return r.json()}).catch(function(){clearTimeout(t);return null})}
+
+Dep.open=function(){FX.tap();sheet('<h2>⭐ Пополнение</h2><div class="lb">Оплата звёздами Telegram · 1:1</div><div class="bnd">'+PACKS.map(function(p){return '<div class="bn" onclick="Dep.buy(\''+p.k+'\')"><div class="s">⭐ '+p.s+'</div><div class="r">+'+p.s+'</div></div>'}).join("")+'</div><div class="lb">Промокод</div><input class="fd" id="pf" placeholder="STAR DROP" style="text-transform:uppercase"><button class="act gh blk" onclick="Dep.promo()">Активировать</button><button class="act gh blk" onclick="Dep.diag()">🩺 Проверить сервер</button><div class="ms" id="depMsg"></div>')};
+
+Dep.diag=function(){var m=$("depMsg");if(m)m.textContent="Пингуем сервер…";
+fetch(API,{method:"GET"}).then(function(r){return r.json()}).then(function(j){
+if(!m)return;
+if(j&&j.packs&&j.packs.indexOf("s1")>=0)m.innerHTML='<b style="color:var(--gn)">Сервер новый ✅ токен: '+(j.token?"есть":"НЕТ!")+'</b>';
+else if(j&&j.ok)m.innerHTML='<b style="color:var(--rd)">На Render СТАРЫЙ bot.js — обнови его</b>';
+else m.innerHTML='<b style="color:var(--rd)">Сервер ответил непонятно</b>';
+}).catch(function(){if(m)m.innerHTML='<b style="color:var(--rd)">Сервер не отвечает (Render спит или упал)</b>'})};
+
+Dep.buy=function(k){
+var p=null,i;for(i=0;i<PACKS.length;i++)if(PACKS[i].k==k)p=PACKS[i];if(!p)return;
+if(!TGI)return toast("Открой игру через бота, не через браузер","l");
+if(!TGW||!TGW.openInvoice)return toast("Обнови Telegram — старая версия","l");
+var m=$("depMsg");
+function attempt(n){
+if(m)m.innerHTML="Создаю счёт… попытка "+n+" из 3<br><small>сервер может просыпаться до 60 сек</small>";
+toast(n===1?"Создаю счёт…":"Пробую ещё раз…");
+apiLong("/api/invoice",{pkg:k,stars:p.s},60000).then(function(j){
+if(j&&j.ok&&j.link){
+if(m)m.innerHTML='<b style="color:var(--gn)">Счёт готов, открываю оплату</b>';
+TGW.openInvoice(j.link,function(s){
+if(s=="paid"){setTimeout(function(){pull();closeM();conf(44);FX.win();hap("w");toast("+"+p.s+" ⭐","w")},1200)}
+else if(s=="cancelled")toast("Оплата отменена");
+else if(s=="failed")toast("Оплата не прошла","l");});
+return}
+if(n<3){setTimeout(function(){attempt(n+1)},2500);return}
+var e=(j&&j.error)||"нет связи",txt;
+if(e=="pkg")txt="На Render старый bot.js — залей новый";
+else if(e=="no_token")txt="На Render не задан BOT_TOKEN";
+else if(e=="tg")txt="Telegram отклонил счёт: "+((j&&j.msg)||"");
+else if(e=="auth")txt="Открой игру через бота";
+else txt="Сервер не ответил. Зайди на Render → Manual Deploy";
+if(m)m.innerHTML='<b style="color:var(--rd)">'+txt+'</b>';
+toast(txt,"l");hap("l");})}
+attempt(1)};
 </script>
 </body>
 </html>
