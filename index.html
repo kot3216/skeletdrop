@@ -8,13 +8,13 @@
 <title>SkeletDrop</title>
 <style>
 :root{
---bg:#0a0e1a;--bg2:#0f1424;--p1:#151b30;--p2:#1c2340;--p3:#252d४f;
+--bg:#0a0e1a;--bg2:#0f1424;--p1:#151b30;--p2:#1c2340;--p3:#252d4f;
 --tl:#2dd4bf;--tl2:#14b8a6;--tl3:#7ff0e2;
 --co:#ff6b6b;--co2:#ee5253;
 --gd:#fbbf24;--gd2:#f59e0b;--gd3:#fde68a;
 --vi:#a78bfa;--vi2:#8b5cf6;
 --tx:#e8ecf8;--dm:#8892b0;--d2:#5a6485;
---ln:rgba(136,146,176,.18);--ln2:rgba(45,212,191,.25)}
+--ln:rgba(136,146,176,.18)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,Arial,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
@@ -150,7 +150,6 @@ h2 em{font-style:normal;font-size:8.5px;font-weight:900;padding:3px 8px;border-r
 .it{border-radius:15px;padding:7px;background:rgba(21,27,48,.75);border:1px solid var(--ln)}
 .it img{width:100%;height:56px;object-fit:contain;border-radius:11px;background:rgba(10,14,26,.8)}
 .it h3{font-size:9.5px;margin:5px 0 2px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.it .sp{font-size:8px;font-weight:800;color:var(--d2);margin-bottom:3px}
 .gr{font-size:7px;font-weight:900;text-transform:uppercase;color:var(--tc);border:1px solid color-mix(in srgb,var(--tc) 44%,transparent);padding:2px 5px;border-radius:8px;width:max-content}
 .ia{display:flex;flex-direction:column;gap:4px;margin-top:6px}.ia .act{min-height:30px;padding:7px 4px;font-size:9px}
 .emp{grid-column:1/-1;text-align:center;padding:22px;border-radius:15px;color:var(--dm);font-weight:700;font-size:11.5px;background:rgba(21,27,48,.6)}
@@ -508,7 +507,7 @@ var FARM_TAG="@SkeletDropBot";
 var REF_BASE="https://t.me/SkeletDropBot?start=ref";
 var README="https://raw.githubusercontent.com/Kabachkoov/Telegram-Gift_id/main/README.md";
 var CDN="https://denzyve.github.io/cdn-telegram-gifts/assets/webp/gift_";
-var KEY="sd_v30",CATK="tg_cat_v4",DAY=864e5,MIN=1,FR=.001,SELL_RATE=.5;
+var KEY="sd_v31",CATK="tg_cat_v5",DAY=864e5,MIN=1,FR=.001;
 var ROCKET_TILT=38,LOAD_MIN=3800,LOAD_MAX=7000,BET_MS=6500,COUNT_MS=3000,WAIT_MS=3600;
 var TGW=(window.Telegram&&window.Telegram.WebApp)||null,TGI=(TGW&&TGW.initData)||"";
 if(TGW){try{TGW.ready();TGW.expand();TGW.setHeaderColor("#0a0e1a");TGW.setBackgroundColor("#0a0e1a")}catch(e){}}
@@ -538,7 +537,6 @@ function r2(v){return Math.round((+v||0)*100)/100}
 function r3(v){return Math.round((+v||0)*1000)/1000}
 function cl(v,a,b){return Math.max(a,Math.min(b,v))}
 function tierOf(p){return p>=4000?"Мифический":p>=1000?"Легендарный":p>=400?"Эпический":p>=150?"Редкий":"Обычный"}
-function sellPrice(g){return Math.max(1,Math.floor(g.price*SELL_RATE))}
 function hms(m){var h=Math.floor(m/36e5),mm=Math.floor(m%36e5/6e4),s=Math.floor(m%6e4/1e3);return[h,mm,s].map(function(x){return String(x).padStart(2,"0")}).join(":")}
 function fl(){return Math.max(0,D.freeAt+DAY-Date.now())}
 function refLink(){var u=TGW&&TGW.initDataUnsafe&&TGW.initDataUnsafe.user;return REF_BASE+(u&&u.id?("_"+u.id):"")}
@@ -551,10 +549,9 @@ function openChannel(){
  var s=$("chStep");
  if(s){s.className="stp";s.querySelector(".sn").textContent="1";
   var q=$("chSub");if(q)q.textContent="канал открыт — жми «Проверить»"}
- var W=window.Telegram&&window.Telegram.WebApp;
- if(W&&W.openTelegramLink){try{W.openTelegramLink(CH);return}catch(e){}}
- if(W&&W.openLink){try{W.openLink(CH);return}catch(e){}}
- window.location.href=CH}
+ var url="https://t.me/SkelwtDrop";
+ try{if(window.Telegram&&Telegram.WebApp&&Telegram.WebApp.openTelegramLink){Telegram.WebApp.openTelegramLink(url);return}}catch(e){}
+ window.location.href=url}
 
 function rocketHTML(){
 return '<div class="rin" style="transform:rotate('+ROCKET_TILT+'deg)">'+
@@ -586,7 +583,6 @@ return '<div class="rin" style="transform:rotate('+ROCKET_TILT+'deg)">'+
 '<circle cx="24" cy="104" r="1.1" fill="#454e6b"/><circle cx="40" cy="104" r="1.1" fill="#454e6b"/><circle cx="56" cy="104" r="1.1" fill="#454e6b"/>'+
 '<path d="M40 4 C56 20 60 40 60 60 L60 110 L20 110 L20 60 C20 40 24 20 40 4z" fill="url(#rshade)"/></g></svg></div>'}
 
-/* СОСТОЯНИЕ */
 function blank(){return{bal:0,bag:[],freeAt:0,sub:0,click:0,facc:0,fts:0,ftot:0,promo:{},name:"Игрок",photo:"",ts:0}}
 var D=blank();
 try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);if(o&&typeof o==="object"){
@@ -606,7 +602,6 @@ var shownBal=0;
 function animBal(){var t=D.bal,e=$("balv");if(Math.abs(t-shownBal)<.5){shownBal=t;e.textContent=ns(t);return}
 var f=shownBal,t0=performance.now();(function s(){var p=Math.min(1,(performance.now()-t0)/420),k=1-Math.pow(1-p,3);e.textContent=ns(f+(t-f)*k);if(p<1)requestAnimationFrame(s);else shownBal=t})()}
 
-/* ЗВУК */
 var AC=null;function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==="suspended")AC.resume();return AC}
 function bip(f,d,t,v,s){var c=ac();if(!c)return;try{var o=c.createOscillator(),g=c.createGain();o.type=t||"sine";o.frequency.setValueAtTime(f,c.currentTime);if(s)o.frequency.exponentialRampToValueAtTime(s,c.currentTime+d);g.gain.setValueAtTime(v||.05,c.currentTime);g.gain.exponentialRampToValueAtTime(1e-4,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
 function hap(t){if(!TGW||!TGW.HapticFeedback)return;try{if(t==="w")TGW.HapticFeedback.notificationOccurred("success");else if(t==="l")TGW.HapticFeedback.notificationOccurred("error");else TGW.HapticFeedback.impactOccurred("light")}catch(e){}}
@@ -622,7 +617,6 @@ p.style.setProperty("--dx",(Math.random()*340-170)+"px");p.style.setProperty("--
 document.body.appendChild(b);setTimeout(function(){if(b.parentNode)b.remove()},1900)}
 function roll(t){var s=0,i;for(i=0;i<t.length;i++)s+=t[i][0];var r=Math.random()*s;for(i=0;i<t.length;i++){r-=t[i][0];if(r<=0)return t[i][1]}return t[t.length-1][1]}
 
-/* СЕРВЕР */
 function api(p,b,ms){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||12000);
 return fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({initData:TGI},b||{})),signal:c.signal}).then(function(r){clearTimeout(t);return r.json()}).catch(function(){clearTimeout(t);return null})}
 function push(){if(!TGI)return;api("/api/save",{state:{balance:D.bal,collection:D.bag,lastFree:D.freeAt,name:D.name,updatedAt:D.ts||Date.now()}})}
@@ -633,7 +627,6 @@ setInterval(function(){sv0();push()},30000);
 window.addEventListener("pagehide",function(){Farm.sync();sv0()});
 document.addEventListener("visibilitychange",function(){if(document.hidden){Farm.sync();sv0()}else{Farm.sync();Farm.paint();pull();engTick()}});
 
-/* МОДАЛКИ */
 var TM=[],RAF={};
 function later(f,m){TM.push(setTimeout(f,m))}
 function stop(){TM.forEach(function(t){clearTimeout(t);clearInterval(t)});TM=[];
@@ -645,7 +638,6 @@ $("veil").onclick=function(e){if(e.target.id==="veil")closeM()};
 function closeP(){$("pv").classList.remove("on")}
 $("pv").onclick=function(e){if(e.target.id==="pv")closeP()};
 
-/* НАВИГАЦИЯ */
 var VIEW="main",fSess=0;
 function go(v,anchor){VIEW=v;
 $("vMain").classList.toggle("on",v==="main");$("vFarm").classList.toggle("on",v==="farm");$("vOut").classList.toggle("on",v==="out");
@@ -658,10 +650,9 @@ scrollTo({top:0,behavior:"smooth"})}
 (function(){var bs=document.querySelectorAll("#dock button");
 for(var i=0;i<bs.length;i++)(function(b){b.onclick=function(){go(b.getAttribute("data-v"),b.getAttribute("data-go"))}})(bs[i])})();
 
-/* КАТАЛОГ */
 function build(list){GIFTS=[];BY={};
 list.forEach(function(o){var p=PM[o[1].toLowerCase()];if(!p||BY[o[1]])return;
-var g={id:o[0],name:o[1],price:p,gr:tierOf(p),img:CDN+o[0]+".webp"};g.sell=sellPrice(g);BY[g.name]=g;GIFTS.push(g)});
+var g={id:o[0],name:o[1],price:p,gr:tierOf(p),img:CDN+o[0]+".webp"};BY[g.name]=g;GIFTS.push(g)});
 GIFTS.sort(function(a,b){return a.price-b.price});
 CASES.forEach(function(c){c._g=null;c._l=null});
 var top=GIFTS.slice(-8).reverse(),els=document.querySelectorAll(".lgc");
@@ -686,7 +677,6 @@ if(e.n){var g=BY[e.n];return{i:g?g.img:STAR_I,t:e.n}}return{i:STAR_I,t:"+"+ns(e.
 function lv(e){return e.z?0:e.n?(BY[e.n]?BY[e.n].price:0):e.jack?e.jack:e.s}
 function bestGift(w){var r=null,i;for(i=0;i<GIFTS.length;i++)if(GIFTS[i].price<=w&&(!r||GIFTS[i].price>r.price))r=GIFTS[i];return r}
 
-/* РЕНДЕР */
 function paintCases(){$("cC").textContent=CASES.length;var h="";
 CASES.forEach(function(c,i){var w=c.free?fl():0,t=TIER[c.tier],gs=cGifts(c).slice(0,4),art="";
 for(var j=0;j<gs.length;j++){var o=j-(gs.length-1)/2;
@@ -699,9 +689,8 @@ function paintInv(){var b=$("iG");$("iC").textContent=D.bag.length;
 if(!D.bag.length){b.innerHTML='<div class="emp">Пусто — открой кейс 🎁</div>';return}
 var h="";
 D.bag.slice(0,90).forEach(function(nm,i){var g=BY[nm];if(!g)return;
-h+='<div class="it" style="--tc:'+TIER[g.gr]+'"><img src="'+g.img+'" '+fb()+'><h3>'+g.name+'</h3>'+
-'<div class="sp">Цена '+ns(g.price)+' ⭐</div><div class="gr">'+g.gr+'</div>'+
-'<div class="ia"><button class="act co" onclick="sell('+i+')">Продать '+ns(sellPrice(g))+'</button><button class="act gd" onclick="go(\'out\')">Вывести</button></div></div>'});
+h+='<div class="it" style="--tc:'+TIER[g.gr]+'"><img src="'+g.img+'" '+fb()+'><h3>'+g.name+'</h3><div class="gr">'+g.gr+'</div>'+
+'<div class="ia"><button class="act co" onclick="sell('+i+')">Продать '+ns(g.price)+'</button><button class="act gd" onclick="go(\'out\')">Вывести</button></div></div>'});
 b.innerHTML=h}
 function paint(){animBal();
 var u=TGW&&TGW.initDataUnsafe&&TGW.initDataUnsafe.user,e=$("ava");
@@ -718,12 +707,10 @@ els.forEach(function(v){IO.observe(v)})}
 setTimeout(function(){document.querySelectorAll(".rz:not(.in)").forEach(function(v){if(v.getBoundingClientRect().top<innerHeight+120)v.classList.add("in")})},60);
 setTimeout(function(){document.querySelectorAll(".rz").forEach(function(v){v.classList.add("in")})},1200)}
 function sell(i){var g=BY[D.bag[i]];if(!g)return;
-var sp=sellPrice(g);
-D.bag.splice(i,1);D.bal=r2(D.bal+sp);save();FX.coin();hap("t");
-toast(g.name+" продан за "+ns(sp)+" ⭐","w")}
+D.bag.splice(i,1);D.bal=r2(D.bal+g.price);save();FX.coin();hap("t");
+toast(g.name+" продан за "+ns(g.price)+" ⭐","w")}
 setInterval(function(){var e=$("cp0");if(e&&CASES[0].free){var w=fl();e.textContent=w>0?"⏳ "+hms(w):"FREE"}},1000);
 
-/* ФАРМ */
 var Farm={
 u:function(){return (TGW&&TGW.initDataUnsafe&&TGW.initDataUnsafe.user)||null},
 ok:function(){var u=Farm.u();if(!u)return false;
@@ -745,7 +732,6 @@ if(D.facc<1)return toast("Минимум 1 ⭐","l");
 var v=Math.floor(D.facc);D.facc=r3(D.facc-v);D.ftot=r2(D.ftot+v);add(v);Farm.paint();conf(22);FX.coin();hap("w");toast("+"+v+" ⭐ с фарма","w")}};
 setInterval(function(){Farm.sync();if(!document.hidden&&VIEW==="farm")Farm.paint()},1000);
 
-/* ВЫВОД */
 var Refs={paint:function(){var e=$("refTxt");if(e)e.textContent=refLink();
 var c=$("refCnt");if(c)c.textContent="0";var b=$("outBtn");if(b)b.disabled=true},
 check:function(){var b=$("refChk");b.disabled=true;b.innerHTML='<span class="spn"></span> Проверяем…';
@@ -753,7 +739,6 @@ setTimeout(function(){b.disabled=false;b.textContent="🔍 Проверить п
 $("refMsg").innerHTML='<b style="color:var(--co)">Проверили: 0 из 5 приглашённых открыли бесплатный кейс</b>';
 toast("Условие не выполнено","l");hap("l")},1600)}};
 
-/* ПОПОЛНЕНИЕ */
 var Dep={open:function(){FX.tap();
 sheet('<h2>⭐ Пополнение</h2><div class="lb">Оплата звёздами Telegram · 1:1</div><div class="bnd">'+
 PACKS.map(function(p){return '<div class="bn" onclick="Dep.buy(\''+p.k+'\','+p.s+')"><div class="s">⭐ '+p.s+'</div><div class="r">+'+p.s+' ⭐</div></div>'}).join("")+
@@ -780,7 +765,6 @@ var h=PROMOS[n];
 if(h){if(D.promo[h.f])return toast("Уже использован","l");D.promo[h.f]=1;add(h.g);closeM();conf(26);FX.win();hap("w");return toast("+"+h.g+" ⭐","w")}
 api("/api/check",{code:n}).then(function(j){if(j&&j.ok){add(j.stars||0);closeM();conf(18);FX.coin();toast("+"+(j.stars||0)+" ⭐","w")}else toast("Код не найден","l")})}};
 
-/* КЕЙСЫ */
 var Vault={
 view:function(i){var c=CASES[i],t=TIER[c.tier],L=cLoot(c),w=c.free?fl():0;
 var rows=L.map(function(l){return{e:l[1],v:lv(l[1])}}).sort(function(a,b){return b.v-a.v}),mx=rows[0].v;
@@ -795,9 +779,8 @@ var chRow="";
 if(c.free){
  chRow='<div class="stp'+(D.sub?" done":"")+'" id="chStep"><div class="sn">'+(D.sub?"✓":"1")+'</div>'+
  '<div class="st">Канал @SkelwtDrop<small id="chSub">'+(D.sub?"подписка подтверждена ✓":"подпишись, потом жми «Проверить»")+'</small></div>'+
- '<button class="act sm" onclick="openChannel()">Открыть</button></div>'+
+ '<button class="act sm" onclick="openChannel()">Подписаться</button></div>'+
  '<button class="act blk" id="gChk" onclick="Vault.checkSub('+i+')">🔍 Проверить подписку</button>'+
- '<a class="act gh blk" href="'+CH+'" target="_blank" rel="noopener" style="font-size:11px;min-height:38px">📢 Открыть канал напрямую</a>'+
  '<div class="ms" id="subMsg"></div>'}
 sheet('<h2>'+c.name+' кейс</h2>'+
 '<div class="ch" style="--tc:'+t+'"><div><div class="n">'+c.name+'</div><div class="t">'+c.tier+' · '+cGifts(c).length+' NFT</div></div><div class="p">'+(c.free?"FREE":"⭐ "+ns(c.price))+'</div></div>'+
@@ -838,7 +821,7 @@ cs+='<div class="cl" id="hc"><img src="'+t.i+'" '+fb()+'><span>'+t.t+'</span></d
 for(j=0;j<8;j++){x=tile(roll(L));cs+='<div class="cl"><img src="'+x.i+'" '+fb()+'><span>'+x.t+'</span></div>'}
 var body;
 if(w.z)body='<div class="hlo"><img src="'+NONE_I+'"></div><h3>Пусто</h3><div class="bdg" style="background:rgba(136,146,176,.2);color:var(--dm)">Не повезло — попробуй ещё</div>';
-else if(w.n)body='<div class="hlo"><div class="bm"></div><img src="'+t.i+'" '+fb()+'></div><h3>'+t.t+'</h3><div class="bdg big">🔥 NFT · '+ns(v)+' ⭐</div><div class="ms">Продажа: '+ns(Math.floor(v*SELL_RATE))+' ⭐</div>';
+else if(w.n)body='<div class="hlo"><div class="bm"></div><img src="'+t.i+'" '+fb()+'></div><h3>'+t.t+'</h3><div class="bdg big">🔥 NFT · '+ns(v)+' ⭐</div>';
 else if(w.jack)body='<div class="hlo"><div class="bm"></div><img src="'+JACK+'"></div><h3>ДЖЕКПОТ</h3><div class="bdg big">⭐ +'+ns(w.jack)+'</div>';
 else body='<div class="hlo"><div class="bm"></div><div class="bd">⭐</div></div><h3>+'+ns(v)+' ⭐</h3><div class="bdg'+(big?" big":"")+'">'+(big?"🔥 КРУПНЫЙ ВЫИГРЫШ":"Зачислено")+'</div>';
 sheet('<h2>'+c.name+' кейс</h2><div class="strip" id="sb"><div class="ndl"></div><div class="trk bl" id="tk">'+cs+'</div></div>'+
@@ -856,7 +839,6 @@ else if(w.z){FX.fail();hap("l")}
 else{conf(16);FX.coin();hap("t")}},3700);
 later(function(){var s=$("sb"),d=$("vd");if(s)s.style.display="none";if(d)d.classList.add("on")},4050)}};
 
-/* ИГРЫ */
 var Hub={open:function(){FX.tap();hap("t");stop();
 sheet('<h2>ИГРЫ</h2><div class="lb">Выбери режим</div><div class="hlist">'+
 '<div class="cv pk" onclick="Plinko.open()"><div class="cbg"></div><div class="gl"></div><div class="sk"></div><div class="cvs"><span class="xp" style="left:50%;top:15px"></span><span class="xp" style="left:34%;top:28px"></span><span class="xp" style="left:66%;top:28px"></span><span class="xp" style="left:22%;top:41px"></span><span class="xp" style="left:50%;top:41px"></span><span class="xp" style="left:78%;top:41px"></span><span class="xb"></span><span class="xn" style="left:6%;width:26%"></span><span class="xn hot" style="left:37%;width:26%"></span><span class="xn" style="left:68%;width:26%"></span></div><div class="ct"><b>PLINKO ›</b><small>3 риска · до ×28</small></div></div>'+
@@ -996,7 +978,6 @@ if(ok){add(w);conf(20);FX.win();hap("w")}else{FX.fail();hap("l")}
 HiLo.paint()}
 RAF.hl=requestAnimationFrame(f)}};
 
-/* CRASH */
 var NM=["neo_fox","dweee","Mira","tony","pixel_77","Luna","Max","Alex","kiryaa","Zoya","sk1e","dropp3r","vex","nova","orbit","kai","zen","ryo","nina","ghost","byte","kilo","sky","wolf","echo","juno","pax","onyx"];
 var ENG={ph:"bet",t0:Date.now(),x:1,cap:2,pl:[],hist:[],my:0,myV:0,myG:null,cash:0,stake:{k:"s",v:10},np:0,ln:0};
 function engCap(){return Math.max(1.05,Math.min(120,.97/(1-Math.random())))}
@@ -1136,7 +1117,6 @@ var msg=Crash.payout(null);Crash.sync();Crash.stat();
 $("cgi").innerHTML="";UI.gi="";conf(28);FX.win();hap("w");
 $("cm").innerHTML='<b style="color:var(--tl)">'+msg+'</b>'}};
 
-/* UPGRADER */
 var UP={src:{k:"s",v:10},tgt:null,busy:0,ang:0,res:null};
 function uv(o){if(!o)return 0;return o.k==="s"?r2(o.v):(BY[o.n]?BY[o.n].price:0)}
 function uch(){var a=uv(UP.src),b=uv(UP.tgt);if(a<1||!UP.tgt||b<=0)return 0;return cl(a/b*.95,.02,.96)}
