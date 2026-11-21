@@ -1240,5 +1240,73 @@ try{shownBal=D.bal;Farm.sync();paint();loadCat();engRound();
 setInterval(feedAdd,3600);if(TGI)pull();setTimeout(hideLoader,LOAD_MAX)}
 catch(err){console.error(err);hideLoader()}
 </script>
+<script>
+/* ФИКС: кулдаун бесплатного кейса не сбрасывается */
+(function(){
+if(typeof D==="undefined")return;
+var BK="sd_free_bk";
+var best=0;
+try{best=+localStorage.getItem(BK)||0}catch(e){}
+best=Math.max(best,D.freeAt||0);
+
+function keep(){
+  var f=Math.max(best,D.freeAt||0);
+  if(f>(D.freeAt||0)){D.freeAt=f;try{sv0()}catch(e){}try{lastSig="";paint()}catch(e){}}
+  if(f>best)best=f;
+  try{localStorage.setItem(BK,String(best))}catch(e){}
+}
+var osv=sv0;
+sv0=function(){osv();try{if((D.freeAt||0)>best)best=D.freeAt;localStorage.setItem(BK,String(best))}catch(e){}};
+
+window.pushNow=function(){
+  if(!TGI)return;
+  D.ts=Date.now();try{sv0()}catch(e){}
+  try{
+    fetch(API+"/api/save",{method:"POST",keepalive:true,cache:"no-store",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({initData:TGI,state:{
+        balance:D.bal,collection:D.bag,lastFree:D.freeAt,name:D.name,updatedAt:D.ts}})});
+  }catch(e){}
+};
+
+pull=function(){
+  if(!TGI)return;
+  var lf=D.freeAt||0, lt=D.ts||0;
+  api("/api/load").then(function(j){
+    if(!j||!j.ok||!j.user)return;
+    var u=j.user, st=+u.updatedAt||0, sf=+u.lastFree||0;
+    if(st>=lt){
+      D.bal=r2(u.balance);
+      D.bag=Array.isArray(u.collection)?u.collection.slice(0,600):[];
+      if(u.subscribed)D.sub=1;
+      D.ts=st;
+    }
+    D.freeAt=Math.max(lf,sf,best);
+    keep();
+    try{lastSig="";paint()}catch(e){}
+    if(D.freeAt>sf)pushNow();
+  });
+};
+
+if(typeof Vault!=="undefined"){
+  var vs=Vault.spin;
+  Vault.spin=function(c,i){
+    vs(c,i);
+    if(c&&c.free){ if(!D.freeAt)D.freeAt=Date.now(); keep(); pushNow(); }
+  };
+}
+
+document.addEventListener("visibilitychange",function(){
+  if(document.hidden){try{Farm.sync()}catch(e){}keep();pushNow()}
+});
+window.addEventListener("pagehide",function(){try{Farm.sync()}catch(e){}keep();pushNow()});
+window.addEventListener("beforeunload",function(){keep();pushNow()});
+setInterval(function(){if(!document.hidden)pushNow()},20000);
+
+keep();
+var n=0,gi=setInterval(function(){keep();if(++n>24)clearInterval(gi)},500);
+setTimeout(function(){pull()},1500);
+})();
+</script>
 </body>
 </html>
