@@ -836,21 +836,6 @@ h2 em{font-size:9px;color:#b9c6d6;background:rgba(255,255,255,.055);border-color
 <div class="pv" id="pv"><div class="pp" id="pp"></div></div>
 <script>
 "use strict";
-
-(function(){
- var body=document.body,header=document.querySelector("body>header"),main=document.querySelector("body>main"),dock=document.querySelector("body>.dock");
- if(!header||!main||!dock||document.querySelector(".sd-app"))return;
- var app=document.createElement("div");app.className="sd-app";
- var side=document.createElement("aside");side.className="sd-sidebar";
- side.innerHTML='<div class="sd-brand"><div class="sd-brand-mark">💀</div><div><div class="sd-brand-name">SKELET<span>DROP</span></div><div class="sd-brand-sub">DIGITAL LOOT ARENA</div></div></div><div class="sd-nav-label">МЕНЮ ИГРОКА</div><nav class="sd-nav"><button class="active" data-sd="home" onclick="go('main');sdNav('home')"><span class="sd-nav-icon">⌂</span>Главная</button><button data-sd="cases" onclick="go('main','cH');sdNav('cases')"><span class="sd-nav-icon">◇</span>Каталог кейсов</button><button data-sd="items" onclick="go('main','iH');sdNav('items')"><span class="sd-nav-icon">▤</span>Мой инвентарь</button><button data-sd="farm" onclick="go('farm');sdNav('farm')"><span class="sd-nav-icon">✦</span>Фарм звёзд</button></nav><div class="sd-side-bottom"><div class="sd-side-status"><i></i> СИСТЕМА АКТИВНА</div><div class="sd-side-note">Все предметы и баланс виртуальные. Играй, собирай коллекцию и открывай новые кейсы.</div></div>';
- var work=document.createElement("div");work.className="sd-workspace";
- body.insertBefore(app,header);app.appendChild(side);app.appendChild(work);
- work.appendChild(header);work.appendChild(main);work.appendChild(dock);
- var veil=document.getElementById("veil"),pv=document.getElementById("pv");if(veil)app.appendChild(veil);if(pv)app.appendChild(pv);
- window.sdNav=function(k){var bs=side.querySelectorAll("[data-sd]");for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i].getAttribute("data-sd")===k)};
- var oldGo=window.go;window.go=function(v,a){oldGo(v,a);if(v==="farm")sdNav("farm");else if(a==="cH")sdNav("cases");else if(a==="iH")sdNav("items");else sdNav("home")};
-})();
-
 function $(i){return document.getElementById(i)}
 var API="https://skeletdrop-bot666.onrender.com",CH="https://t.me/SkelwtDrop";
 var CDN="https://denzyve.github.io/cdn-telegram-gifts/assets/webp/gift_";
@@ -1314,7 +1299,7 @@ if(tx!==UI.lx){UI.lx=tx;UI.cx.textContent=tx;UI.cx.style.color=ENG.x<2?"#7ff0e2"
 if(ENG.my&&!ENG.cash)$("cc").textContent="Забрать "+ns(ENG.myV*ENG.x)}
 var box=$("cgi");
 if(box){if(ENG.my&&!ENG.cash&&!ENG.myG){var w=ENG.myV*ENG.x;
-var h=GIFTS.filter(function(g){return g.price<=w}).sort(function(a,b){return b.price-a.price}).slice(0,5).map(function(g){return '<img src="'+g.img+'" '+gfb()+' onclick="Crash.takeGift(\''+g.name.replace(/'/g,"'")+'\')">'}).join("");
+var h=GIFTS.filter(function(g){return g.price<=w}).sort(function(a,b){return b.price-a.price}).slice(0,5).map(function(g){return '<img src="'+g.img+'" '+gfb()+' onclick="Crash.takeGift(\''+g.name.replace(/'/g,"\\'")+'\')">'}).join("");
 if(h!==UI.gi){UI.gi=h;box.innerHTML=h;box.className="gifticons"+(h?" on":"")}}
 else if(UI.gi!==""){UI.gi="";box.innerHTML="";box.className="gifticons"}}}
 RAF.cr=requestAnimationFrame(Crash.frame)},
@@ -1426,7 +1411,7 @@ $("spq").oninput=function(e){SP.q=e.target.value;SP.fill()}},
 fill:function(){var isS=SP.k===0||SP.mode==="crash";
 var l=isS?D.bag.map(function(n){return BY[n]}).filter(Boolean):GIFTS;
 if(SP.q){var q=SP.q.toLowerCase();l=l.filter(function(x){return x.name.toLowerCase().indexOf(q)>=0})}
-$("spg").innerHTML=l.length?l.slice(0,150).map(function(g){return '<div class="pi" onclick="SP.gift(\''+g.name.replace(/'/g,"'")+'\')"><img src="'+g.img+'" '+fb()+'><div class="n">'+g.name+'</div><div class="v">'+ns(g.price)+' ⭐</div></div>'}).join(""):'<div style="grid-column:1/-1;text-align:center;padding:20px;color:#8892b0;font-size:11px">Ничего не найдено</div>'},
+$("spg").innerHTML=l.length?l.slice(0,150).map(function(g){return '<div class="pi" onclick="SP.gift(\''+g.name.replace(/'/g,"\\'")+'\')"><img src="'+g.img+'" '+fb()+'><div class="n">'+g.name+'</div><div class="v">'+ns(g.price)+' ⭐</div></div>'}).join(""):'<div style="grid-column:1/-1;text-align:center;padding:20px;color:#8892b0;font-size:11px">Ничего не найдено</div>'},
 set:function(v){var e=$("spv");if(e)e.value=Math.max(1,Math.round(v))},
 mul:function(m){SP.set(Math.max(1,Math.round((uv(UP.src)||10)*m)))},
 stars:function(){var v=Math.round(parseFloat($("spv").value));if(!v||v<1)return toast("Минимум 1 ⭐","l");
