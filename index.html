@@ -1133,6 +1133,77 @@ input::placeholder{color:#8197b4!important}
 @keyframes upgrade-miss{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @media(prefers-reduced-motion:reduce){.nft-prize::before,.nft-prize::after,.nft-prize .bm,.nft-rays,.nft-prize img,.nft-kicker,.nft-title,.nft-value{animation:none!important}}
 </style>
+
+<style id="skeletdrop-smooth-motion-pass">
+/* Smooth, lightweight motion polish — presentation only */
+:root{scroll-behavior:smooth}
+@media (prefers-reduced-motion:no-preference){
+  button,.act,.gc,.case,.it,.ph,.ub,.us,.tl,.hd,.dock button,.q button,.gxRow button,
+  .back,.fhero,.ftab,.stp,.sub,.pi,.tk,.cbRow,.gifticons img,.fan img,.bin,.dial,
+  .nft-prize,.nft-prize img{
+    transition:
+      transform .34s cubic-bezier(.22,1,.36,1),
+      box-shadow .38s cubic-bezier(.22,1,.36,1),
+      border-color .3s ease,
+      background-color .3s ease,
+      filter .35s ease,
+      opacity .3s ease;
+  }
+  button:not(:disabled),.act:not(:disabled),.q button,.gxRow button{
+    -webkit-tap-highlight-color:transparent;
+  }
+  button:not(:disabled):active,.act:not(:disabled):active,.q button:active,.gxRow button:active{
+    transform:translateY(1px) scale(.975);
+    transition-duration:.12s;
+  }
+  .gc,.case,.it,.ph,.ub,.us,.fhero,.ftab,.stp,.sub,.pi{
+    will-change:transform;
+  }
+  .gc:hover,.case:hover,.it:hover,.ph:hover,.ub:hover,.us:hover,.pi:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.18);
+  }
+  .gc:active,.case:active,.it:active,.ph:active,.pi:active{
+    transform:translateY(-1px) scale(.99);
+  }
+  .gc img,.case img,.it img,.pi img,.fan img{
+    transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .4s ease;
+  }
+  .gc:hover img,.case:hover img,.it:hover img,.pi:hover img{
+    transform:scale(1.045);
+    filter:saturate(1.08) brightness(1.04);
+  }
+  .act:hover:not(:disabled),.back:hover,.dock button:hover{
+    filter:brightness(1.08);
+    box-shadow:0 9px 25px rgba(103,166,232,.2);
+  }
+  .dock button{transition:color .25s ease,background .3s ease,transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}
+  .dock button.on{transform:translateY(-2px)}
+  .tl:not(:disabled):hover{transform:translateY(-2px) scale(1.025)}
+  .hd:not(.off):hover{transform:translateY(-2px)}
+  .tk{animation:sd-feed-in .48s cubic-bezier(.22,1,.36,1) both}
+  .cbRow.new{animation:sd-row-in .42s cubic-bezier(.22,1,.36,1) both}
+  .nft-prize{animation:sd-prize-bloom .85s cubic-bezier(.16,1,.3,1) both}
+  .nft-prize img{animation:sd-prize-float 3.6s ease-in-out .8s infinite}
+  .nft-rays{animation:sd-rays-turn 18s linear infinite}
+  .sh,.pp{
+    animation:sd-sheet-in .42s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes sd-feed-in{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes sd-row-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sd-sheet-in{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes sd-prize-bloom{0%{opacity:0;transform:translateY(20px) scale(.82);filter:blur(5px) brightness(1.7)}65%{opacity:1;transform:translateY(-3px) scale(1.035);filter:blur(0) brightness(1.18)}100%{transform:translateY(0) scale(1);filter:brightness(1)}}
+  @keyframes sd-prize-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+  @keyframes sd-rays-turn{to{transform:rotate(360deg)}}
+}
+@media(prefers-reduced-motion:reduce){
+  :root{scroll-behavior:auto}
+  .tk,.cbRow.new,.nft-prize,.nft-prize img,.nft-rays,.sh,.pp{animation:none!important}
+  button,.act,.gc,.case,.it,.ph,.ub,.us,.tl,.hd,.dock button,.q button,.gxRow button,
+  .back,.fhero,.ftab,.stp,.sub,.pi,.tk,.cbRow,.gifticons img,.fan img,.bin,.dial,
+  .nft-prize,.nft-prize img{transition:none!important;will-change:auto!important}
+}
+</style>
 </head>
 <body>
 <div id="loader"><div class="lglow"></div><div class="lring"></div>
