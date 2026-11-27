@@ -1738,12 +1738,13 @@ hlH.unshift({n:res,ok:ok});hlH=hlH.slice(0,12);
 HL.busy=true;HL.res=null;HL.out={n:res,ok:ok,w:w};HiLo.lock(true);
 var st=$("hs"),ptr=$("hptr"),tr=$("htr");st.classList.remove("win","lose");
 $("hres").textContent="стрелка едет…";hap("t");
-var W=tr.clientWidth||240,amp=Math.min(Math.abs(50-res),res-3,97-res);if(amp<6)amp=6;
-var side=(res>=50)?1:-1,t0=performance.now();
-function f(){var el=performance.now()-t0,p=Math.min(1,el/3400);
-var pos=res+amp*Math.cos(p*Math.PI*8)*Math.exp(-3.4*p)*side;
-if(p>.9){var k=(p-.9)/.1;pos=pos*(1-k)+res*k}
-pos=cl(pos,3,97);
+var W=tr.clientWidth||240,t0=performance.now();
+function f(){var el=performance.now()-t0,p=Math.min(1,el/3800);
+var ease=1-Math.pow(1-p,3);
+var decay=Math.pow(1-p,2.25);
+var wobble=Math.cos(p*Math.PI*7.2)*decay;
+var pos=50+(res-50)*ease+(res-50)*.13*wobble;
+pos=cl(pos,2,98);
 ptr.style.transform="translateX("+((pos/100-.5)*W).toFixed(2)+"px)";
 if(p<1){RAF.hl=requestAnimationFrame(f);return}
 ptr.style.transform="translateX("+((res/100-.5)*W).toFixed(2)+"px)";
