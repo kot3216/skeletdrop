@@ -195,7 +195,7 @@ h2 em{font-style:normal;font-size:8.5px;font-weight:900;padding:3px 9px;border-r
 .strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:46px;z-index:2}
 .strip::before{left:0;background:linear-gradient(90deg,#070b14,transparent)}.strip::after{right:0;background:linear-gradient(-90deg,#070b14,transparent)}
 .ndl{position:absolute;left:50%;top:0;bottom:0;width:2px;z-index:3;background:linear-gradient(var(--tl),transparent);box-shadow:0 0 12px var(--tl)}
-.trk{display:flex;align-items:center;gap:8px;height:100%;padding:6px;transition:transform 3.6s cubic-bezier(.08,.76,.03,1)}
+.trk{display:flex;align-items:center;gap:8px;height:100%;padding:6px;transition:transform 4.15s cubic-bezier(.075,.78,.035,1)}
 .trk.bl{filter:blur(1px)}
 .cl{flex:0 0 76px;height:90px;background:var(--gl2);border:1px solid rgba(255,255,255,.12);border-radius:15px;display:grid;place-items:center;padding:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
 .cl img{width:46px;height:46px;object-fit:contain}
@@ -1089,29 +1089,31 @@ input::placeholder{color:#8197b4!important}
 @media(hover:none){.gc:hover,.case:hover,.it:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.gc,.case,.it{transition:none}}
 </style>
-<style id="skeletdrop-memory-game">
-.cv.mem{grid-column:span 2;min-height:126px;background:linear-gradient(130deg,#18244c,#343b82 55%,#5b4ca5);position:relative;overflow:hidden}
-.mem-cover{position:absolute;right:18px;top:14px;width:112px;height:76px;display:grid;grid-template-columns:repeat(2,1fr);gap:7px;transform:rotate(-7deg)}
-.mem-cover span{display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.13);font-size:23px;box-shadow:0 7px 18px #05081766;backdrop-filter:blur(8px)}
-.mem-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mem-head h2{margin:4px 0}.mem-sub{font-size:11px;color:var(--dm);font-weight:700}
-.mem-best{font-size:8px;letter-spacing:1px;color:var(--dm);padding:9px 12px;border:var(--gb);border-radius:13px;background:var(--gl2)}
-.mem-best b{display:block;color:var(--gd);font-size:17px;margin-top:3px}
-.mem-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-.mem-stats>div{padding:10px;border-radius:14px;text-align:center;background:var(--gl2);border:var(--gb)}
-.mem-stats b{display:block;font-size:19px;color:var(--tl3);font-variant-numeric:tabular-nums}
-.mem-stats small{font-size:8px;color:var(--dm);font-weight:900;letter-spacing:1px}
-.mem-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.mem-card{position:relative;aspect-ratio:1;border:1px solid rgba(255,255,255,.16);border-radius:16px;background:linear-gradient(145deg,#29345d,#141c36);color:white;cursor:pointer;box-shadow:0 7px 16px #0005,inset 0 1px 0 #ffffff22;transition:transform .18s,border-color .18s,background .18s;overflow:hidden}
-.mem-card:active{transform:scale(.94)}
-.mem-card .mem-back{font-size:25px;font-weight:900;color:#9aa8db;text-shadow:0 0 14px #9aa8db66}
-.mem-card .mem-face{display:none;font-size:clamp(23px,6vw,36px)}
-.mem-card.open,.mem-card.done{background:linear-gradient(145deg,#174c57,#1b3151);border-color:#54dfd0;box-shadow:0 0 18px #2dd4bf33,inset 0 1px 0 #ffffff33}
-.mem-card.open .mem-back,.mem-card.done .mem-back{display:none}
-.mem-card.open .mem-face,.mem-card.done .mem-face{display:inline}
-.mem-card.done{opacity:.62;border-color:#f6cf70}
-@media(max-width:380px){.mem-grid{gap:6px}.mem-card{border-radius:12px}.mem-cover{right:10px;width:90px}}
-@media(prefers-reduced-motion:reduce){.mem-card{transition:none}}
+
+<style id="skeletdrop-gameplay-fx">
+/* Reel: heavier slowdown and a clearer landing moment */
+.trk{transition:transform 4.15s cubic-bezier(.075,.78,.035,1)}
+.cl.hit{animation:reel-impact .9s cubic-bezier(.16,1,.3,1);border-color:rgba(127,240,226,.95);box-shadow:0 0 0 2px rgba(45,212,191,.16),0 0 34px rgba(45,212,191,.62),inset 0 1px 0 rgba(255,255,255,.45)}
+@keyframes reel-impact{0%{transform:scale(1)}28%{transform:scale(1.2) rotate(-2deg)}55%{transform:scale(.96) rotate(1deg)}100%{transform:scale(1.06)}}
+.nft-prize{width:clamp(124px,36vw,166px);height:clamp(124px,36vw,166px);isolation:isolate;margin:2px auto 4px}
+.nft-prize::before{content:"";position:absolute;inset:-19px;border-radius:50%;background:conic-gradient(from 0deg,transparent,#f8d77a 12%,transparent 24%,#7ff0e2 38%,transparent 52%,#a78bfa 68%,transparent 82%,#f8d77a);opacity:.78;filter:blur(5px);animation:nft-orbit 5s linear infinite;z-index:-2}
+.nft-prize::after{content:"";position:absolute;inset:-9px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,128,.28),rgba(45,212,191,.13) 48%,transparent 72%);z-index:-1;animation:nft-breathe 1.8s ease-in-out infinite}
+.nft-prize .bm{inset:-22px;background:conic-gradient(from 0deg,transparent 0 18deg,rgba(255,220,128,.72) 20deg 25deg,transparent 28deg 68deg,rgba(127,240,226,.7) 72deg 77deg,transparent 80deg 130deg,rgba(167,139,250,.65) 134deg 139deg,transparent 142deg 190deg,rgba(255,220,128,.65) 194deg 199deg,transparent 202deg);animation:nft-orbit 3.8s linear infinite}
+.nft-prize img{width:clamp(94px,27vw,126px);height:clamp(94px,27vw,126px);filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));animation:nft-pop .85s cubic-bezier(.16,1,.3,1) both}
+.nft-rays{position:absolute;inset:-25%;background:repeating-conic-gradient(from 0deg,rgba(255,224,142,.15) 0deg 3deg,transparent 3deg 18deg);mask-image:radial-gradient(circle,black 0 30%,transparent 70%);animation:nft-orbit 24s linear infinite;z-index:-1}
+.nft-kicker{font-size:9px;font-weight:1000;letter-spacing:3px;color:#f6d889;text-shadow:0 0 16px rgba(246,216,137,.5);animation:nft-rise .55s .16s both}
+.nft-title{font-size:clamp(16px,4vw,20px);font-weight:950;max-width:100%;overflow-wrap:anywhere;text-shadow:0 3px 20px rgba(0,0,0,.45);animation:nft-rise .55s .24s both}
+.nft-value{animation:nft-value-pop .7s .34s cubic-bezier(.16,1,.3,1) both!important}
+.nft-celebrate .vd.on{gap:11px}
+.nft-celebrate .vd.on .nft-prize{animation:nft-float 3s ease-in-out infinite}
+.nft-celebrate .vd.on .act.gd{box-shadow:0 0 24px rgba(45,212,191,.3),0 8px 24px rgba(0,0,0,.3)}
+@keyframes nft-orbit{to{transform:rotate(360deg)}}
+@keyframes nft-breathe{0%,100%{transform:scale(.92);opacity:.6}50%{transform:scale(1.12);opacity:1}}
+@keyframes nft-pop{0%{opacity:0;transform:scale(.18) rotate(-24deg);filter:blur(8px)}65%{opacity:1;transform:scale(1.13) rotate(5deg);filter:blur(0)}100%{transform:scale(1) rotate(0)}}
+@keyframes nft-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes nft-value-pop{0%{opacity:0;transform:scale(.55)}75%{opacity:1;transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes nft-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.nft-prize::before,.nft-prize::after,.nft-prize .bm,.nft-rays,.nft-prize img,.nft-kicker,.nft-title,.nft-value{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1415,13 +1417,13 @@ for(j=0;j<8;j++){x=tile(roll(L));cs+='<div class="cl"><img src="'+x.i+'" '+fb()+
 if(c.free){D.freeAt=Date.now();bestFree=D.freeAt}
 if(w.n)D.bag.push(w.n);else if(v>0)D.bal=r2(D.bal+v);
 save();if(c.free)pushNow();
-var body=w.z?'<div class="hlo"><img src="'+NONE+'"></div><h3>Пусто</h3><div class="bdg" style="background:rgba(136,146,176,.2);color:#8892b0">Не повезло</div>':w.n?'<div class="hlo"><div class="bm"></div><img src="'+t.i+'" '+fb()+'></div><h3>'+t.t+'</h3><div class="bdg big">🎁 '+ns(v)+' ⭐</div>':'<div class="hlo"><div class="bm"></div><div class="bd">⭐</div></div><h3>+'+ns(v)+' ⭐</h3><div class="bdg">Зачислено</div>';
+var body=w.z?'<div class="hlo"><img src="'+NONE+'"></div><h3>Пусто</h3><div class="bdg" style="background:rgba(136,146,176,.2);color:#8892b0">Не повезло</div>':w.n?'<div class="hlo nft-prize"><div class="bm"></div><div class="nft-rays"></div><img src="'+t.i+'" '+fb()+'></div><div class="nft-kicker">✦ NFT ПОЛУЧЕН ✦</div><h3 class="nft-title">'+t.t+'</h3><div class="bdg big nft-value">🎁 '+ns(v)+' ⭐</div>':'<div class="hlo"><div class="bm"></div><div class="bd">⭐</div></div><h3>+'+ns(v)+' ⭐</h3><div class="bdg">Зачислено</div>';
 sheet('<h2>'+c.name+'</h2><div class="strip" id="sb"><div class="ndl"></div><div class="trk bl" id="tk">'+cs+'</div></div><div class="vd" id="vd">'+body+'<button class="act gd" onclick="Vault.go('+i+')">🔄 Ещё раз</button><button class="act gh" onclick="Vault.view('+i+')">К наградам</button></div>',1);
 later(function(){var e=$("tk");if(!e)return;var W=e.parentElement.clientWidth,cw=e.children[0].getBoundingClientRect().width||76;
-e.style.transform="translate3d(-"+(6+24*(cw+8)+cw/2-W/2+(Math.random()*14-7))+"px,0,0)"},90);
+e.style.transform="translate3d(-"+(6+24*(cw+8)+cw/2-W/2+(Math.random()*10-5))+"px,0,0)"},90);
 later(function(){var e=$("tk");if(e)e.classList.remove("bl");var h=$("hc");if(h)h.classList.add("hit");
-if(v>0){conf(w.n?40:20);hap("w")}else hap("l")},3700);
-later(function(){var s=$("sb"),d=$("vd");if(s)s.style.display="none";if(d)d.classList.add("on")},4050)}};
+if(v>0){conf(w.n?72:28);hap("w");if(w.n){var sh=$("sh");if(sh)sh.classList.add("nft-celebrate")}}else hap("l")},4250);
+later(function(){var s=$("sb"),d=$("vd");if(s)s.style.display="none";if(d)d.classList.add("on")},4550)}};
 /* обложка Plinko: шарик скачет по колышкам */
 function pkCover(){
 var pegs=[[50,10,.27],[36,26,0],[64,26,.6],[22,42,0],[50,42,1.08],[78,42,0],[14,58,0],[38,58,0],[62,58,1.56],[86,58,0]];
@@ -1441,28 +1443,8 @@ sheet('<h2>ИГРЫ</h2><div class="lb">Выбери режим</div><div class=
 '<div class="xnm"><i style="animation-delay:0s">28</i><i style="animation-delay:1.2s">73</i><i style="animation-delay:2.4s">50</i></div>'+
 '<div class="xtr"><div class="g"></div></div><div class="xth"></div></div>'+
 '<div class="ct"><b>БОЛЬШЕ / МЕНЬШЕ ›</b><small>пресеты · до ×49</small></div></div>'+
-'<div class="cv mem" onclick="Memory.open()"><div class="cbg"></div><div class="gl"></div><div class="sk"></div><div class="mem-cover"><span>🧠</span><span>🎮</span><span>✨</span><span>🧩</span></div><div class="ct"><b>MEMORY ›</b><small>найди пары · побей рекорд</small></div></div>'+
-'</div><div class="ms">MEMORY — бесплатная тренировка на память, без ставок и списания баланса.</div>',1)}};
-var Memory={cards:[],first:-1,lock:0,moves:0,found:0,start:0,best:0,
-open:function(){stop();Memory.best=+(ls("sd_memory_best","0"))||0;Memory.newGame()},
-newGame:function(){var a=["🦴","💎","🎁","🚀","👑","🌙","⭐","🧿"],deck=a.concat(a);
-for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=deck[i];deck[i]=deck[j];deck[j]=t}
-Memory.cards=deck;Memory.first=-1;Memory.lock=0;Memory.moves=0;Memory.found=0;Memory.start=Date.now();Memory.render()},
-render:function(){var h="";for(var i=0;i<Memory.cards.length;i++)h+='<button class="mem-card" id="mem'+i+'" onclick="Memory.pick('+i+')"><span class="mem-back">?</span><span class="mem-face">'+Memory.cards[i]+'</span></button>';
-sheet('<div class="mem-head"><div><h2>MEMORY</h2><div class="mem-sub">Найди все 8 пар</div></div><div class="mem-best">РЕКОРД <b>'+Memory.best+'</b></div></div>'+
-'<div class="mem-stats"><div><b id="memMoves">0</b><small>ХОДЫ</small></div><div><b id="memFound">0/8</b><small>ПАРЫ</small></div><div><b id="memTime">0:00</b><small>ВРЕМЯ</small></div></div>'+
-'<div class="mem-grid">'+h+'</div><div class="ms" id="memMsg">Открывай карточки и ищи одинаковые символы.</div>'+
-'<div class="rw"><button class="act gd" onclick="Memory.newGame()">↻ Новая игра</button><button class="act gh" onclick="Hub.open()">← Все игры</button></div>',1)},
-pick:function(i){if(Memory.lock||!Memory.cards[i])return;var e=$("mem"+i);if(!e||e.classList.contains("open")||e.classList.contains("done"))return;
-e.classList.add("open");hap("t");
-if(Memory.first<0){Memory.first=i;return}
-Memory.moves++;var a=Memory.first,b=i;Memory.first=-1;
-if(Memory.cards[a]===Memory.cards[b]){$("mem"+a).classList.add("done");e.classList.add("done");Memory.found++;Memory.stats();
-if(Memory.found===8){var score=Math.max(1,1000-Memory.moves*35-Math.floor((Date.now()-Memory.start)/1000)*3);if(!Memory.best||Memory.moves<Memory.best){Memory.best=Memory.moves;ss("sd_memory_best",String(Memory.best))}
-$("memMsg").innerHTML='<b style="color:#2dd4bf">🏆 Все пары найдены! '+Memory.moves+' ходов · '+score+' очков</b>';conf(24);hap("w")}else{$("memMsg").textContent="Есть пара! Продолжай."}}
-else{Memory.lock=1;Memory.stats();$("memMsg").textContent="Не совпали — попробуй запомнить их.";later(function(){var x=$("mem"+a),y=$("mem"+b);if(x)x.classList.remove("open");if(y)y.classList.remove("open");Memory.lock=0},720)}},
-stats:function(){var m=$("memMoves"),f=$("memFound"),t=$("memTime");if(m)m.textContent=Memory.moves;if(f)f.textContent=Memory.found+"/8";if(t){var sec=Math.floor((Date.now()-Memory.start)/1000);t.textContent=Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0")}}
-};
+
+'</div><div class="ms">Мини-игры с анимациями и быстрыми раундами.</div>',1)}};
 function bf(i){return '<input class="fd" id="'+i+'" type="number" min="1" value="10" inputmode="numeric">'}
 function qb(i){return '<div class="q"><button onclick="setB(\''+i+'\',1)">1</button><button onclick="setB(\''+i+'\',5)">5</button><button onclick="setB(\''+i+'\',10)">10</button><button onclick="setB(\''+i+'\',25)">25</button><button onclick="setB(\''+i+'\',Math.max(1,Math.floor(D.bal)))">Всё</button></div>'}
 function setB(i,v){var e=$(i);if(e&&!e.disabled){e.value=Math.max(1,Math.round(v))}}
