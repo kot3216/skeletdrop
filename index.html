@@ -653,7 +653,7 @@ header{position:sticky;top:0;min-height:76px;padding:12px clamp(18px,3vw,42px);b
 .bal{font-size:19px;letter-spacing:.2px}
 .tu{border:0;border-radius:12px;padding:12px 19px;color:#15210e;background:linear-gradient(135deg,#e4ffb8,#b7f36b 58%,#8ed84b);box-shadow:0 7px 20px rgba(183,243,107,.16);font-size:11px;letter-spacing:.2px}
 main{width:min(100%,1480px);max-width:none;margin:0 auto;padding:26px clamp(18px,3vw,42px) 90px}
-.view.on#vMain{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);grid-template-areas:"hero hub" "live hub" "cases cases" "inventory inventory";gap:0 22px;align-content:start}
+.view.on#vMain{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);grid-template-areas:"hero hub" "live hub" "casesTitle casesTitle" "cases cases" "inventoryTitle inventoryTitle" "inventory inventory";gap:0 22px;align-content:start}
 .sd-hero{grid-area:hero;min-height:292px;margin:0 0 14px;padding:27px 29px;border-radius:25px;border:1px solid rgba(183,243,107,.16);background:radial-gradient(ellipse at 83% 25%,rgba(183,243,107,.15),transparent 35%),radial-gradient(ellipse at 8% 100%,rgba(137,103,237,.14),transparent 45%),linear-gradient(135deg,#172536 0%,#111a2a 52%,#101626 100%);box-shadow:0 20px 50px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);overflow:hidden}
 .sd-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.035) 50%,transparent 65%);pointer-events:none}
 .sd-hero-top{position:relative;z-index:2}
@@ -691,8 +691,8 @@ main{width:min(100%,1480px);max-width:none;margin:0 auto;padding:26px clamp(18px
 h2{grid-column:1/-1;margin:13px 0 13px;font-size:19px;letter-spacing:-.3px;color:#eef4fb}
 h2::before{width:4px;height:18px;border-radius:4px;background:var(--tl);box-shadow:0 0 12px rgba(183,243,107,.28)}
 h2 em{font-size:9px;color:#b9c6d6;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.08)}
-#cH{grid-area:auto}
-.cases{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:22px}
+#cH{grid-area:casesTitle}
+.cases{grid-area:cases;grid-column:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:22px}
 .case{padding:13px;border-radius:19px;background:linear-gradient(145deg,rgba(24,36,53,.95),rgba(12,19,31,.96)),radial-gradient(100% 80% at 50% 0%,color-mix(in srgb,var(--tc) 22%,transparent),transparent);border:1px solid rgba(255,255,255,.085);box-shadow:0 12px 28px rgba(0,0,0,.2);transition:transform .18s,border-color .18s}
 .case:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--tc) 42%,transparent)}
 .art{height:132px}
@@ -701,8 +701,8 @@ h2 em{font-size:9px;color:#b9c6d6;background:rgba(255,255,255,.055);border-color
 .cft{padding:10px 2px 2px}
 .cft h3{font-size:13px}
 .prc{font-size:12px;border-radius:9px;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.09)}
-#iH{grid-area:auto}
-.shelf{grid-column:1/-1;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+#iH{grid-area:inventoryTitle}
+.shelf{grid-area:inventory;grid-column:auto;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .it{padding:12px;border-radius:17px;background:linear-gradient(145deg,#182437,#101927);border:1px solid rgba(255,255,255,.075);box-shadow:0 10px 25px rgba(0,0,0,.18)}
 .it img{height:76px}
 .it h3{font-size:10px}
@@ -730,7 +730,7 @@ h2 em{font-size:9px;color:#b9c6d6;background:rgba(255,255,255,.055);border-color
  .sd-sidebar{display:none}.sd-workspace{margin-left:0}
  header{min-height:65px;padding:9px 15px}
  main{padding:15px 13px 92px}
- .view.on#vMain{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"hero" "live" "hub" "cases" "inventory";gap:0}
+ .view.on#vMain{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"hero" "live" "hub" "casesTitle" "cases" "inventoryTitle" "inventory";gap:0}
  .sd-hero{min-height:250px;margin-bottom:12px;padding:22px 20px;border-radius:21px}
  .sd-title{font-size:clamp(39px,10vw,55px);margin-top:30px}
  .sd-hero-bottom{gap:13px;margin-top:30px;flex-wrap:wrap}
