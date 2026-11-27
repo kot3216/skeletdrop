@@ -635,7 +635,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opa
 .sd-brand-sub{font-size:8px;font-weight:900;letter-spacing:2px;color:#728198;margin-top:3px}
 .sd-nav-label{padding:0 11px 9px;color:#607087;font-size:9px;font-weight:1000;letter-spacing:1.8px}
 .sd-nav{display:grid;gap:6px}
-.sd-nav button{width:100%;height:48px;padding:0 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:#9ba9bc;display:flex;align-items:center;gap:12px;text-align:left;font:800 12px inherit;cursor:pointer;transition:.18s}
+.sd-nav button{width:100%;height:48px;padding:0 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:#9ba9bc;display:flex;align-items:center;gap:12px;text-align:left;font:inherit;font-size:12px;font-weight:800;cursor:pointer;transition:.18s}
 .sd-nav button .sd-nav-icon{width:27px;height:27px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.045);font-size:15px}
 .sd-nav button:hover{background:rgba(255,255,255,.045);color:#fff}
 .sd-nav button.active{background:linear-gradient(100deg,rgba(183,243,107,.16),rgba(183,243,107,.045));border-color:rgba(183,243,107,.18);color:#dfffbd;box-shadow:inset 3px 0 var(--tl)}
@@ -842,7 +842,7 @@ h2 em{font-size:9px;color:#b9c6d6;background:rgba(255,255,255,.055);border-color
  if(!header||!main||!dock||document.querySelector(".sd-app"))return;
  var app=document.createElement("div");app.className="sd-app";
  var side=document.createElement("aside");side.className="sd-sidebar";
- side.innerHTML='<div class="sd-brand"><div class="sd-brand-mark">💀</div><div><div class="sd-brand-name">SKELET<span>DROP</span></div><div class="sd-brand-sub">DIGITAL LOOT ARENA</div></div></div><div class="sd-nav-label">МЕНЮ ИГРОКА</div><nav class="sd-nav"><button class="active" data-sd="home" onclick="go(\\'main\\');sdNav(\\'home\\')"><span class="sd-nav-icon">⌂</span>Главная</button><button data-sd="cases" onclick="go(\\'main\\',\\'cH\\');sdNav(\\'cases\\')"><span class="sd-nav-icon">◇</span>Каталог кейсов</button><button data-sd="items" onclick="go(\\'main\\',\\'iH\\');sdNav(\\'items\\')"><span class="sd-nav-icon">▤</span>Мой инвентарь</button><button data-sd="farm" onclick="go(\\'farm\\');sdNav(\\'farm\\')"><span class="sd-nav-icon">✦</span>Фарм звёзд</button></nav><div class="sd-side-bottom"><div class="sd-side-status"><i></i> СИСТЕМА АКТИВНА</div><div class="sd-side-note">Все предметы и баланс виртуальные. Играй, собирай коллекцию и открывай новые кейсы.</div></div>';
+ side.innerHTML='<div class="sd-brand"><div class="sd-brand-mark">💀</div><div><div class="sd-brand-name">SKELET<span>DROP</span></div><div class="sd-brand-sub">DIGITAL LOOT ARENA</div></div></div><div class="sd-nav-label">МЕНЮ ИГРОКА</div><nav class="sd-nav"><button class="active" data-sd="home" onclick="go('main');sdNav('home')"><span class="sd-nav-icon">⌂</span>Главная</button><button data-sd="cases" onclick="go('main','cH');sdNav('cases')"><span class="sd-nav-icon">◇</span>Каталог кейсов</button><button data-sd="items" onclick="go('main','iH');sdNav('items')"><span class="sd-nav-icon">▤</span>Мой инвентарь</button><button data-sd="farm" onclick="go('farm');sdNav('farm')"><span class="sd-nav-icon">✦</span>Фарм звёзд</button></nav><div class="sd-side-bottom"><div class="sd-side-status"><i></i> СИСТЕМА АКТИВНА</div><div class="sd-side-note">Все предметы и баланс виртуальные. Играй, собирай коллекцию и открывай новые кейсы.</div></div>';
  var work=document.createElement("div");work.className="sd-workspace";
  body.insertBefore(app,header);app.appendChild(side);app.appendChild(work);
  work.appendChild(header);work.appendChild(main);work.appendChild(dock);
@@ -1314,7 +1314,7 @@ if(tx!==UI.lx){UI.lx=tx;UI.cx.textContent=tx;UI.cx.style.color=ENG.x<2?"#7ff0e2"
 if(ENG.my&&!ENG.cash)$("cc").textContent="Забрать "+ns(ENG.myV*ENG.x)}
 var box=$("cgi");
 if(box){if(ENG.my&&!ENG.cash&&!ENG.myG){var w=ENG.myV*ENG.x;
-var h=GIFTS.filter(function(g){return g.price<=w}).sort(function(a,b){return b.price-a.price}).slice(0,5).map(function(g){return '<img src="'+g.img+'" '+gfb()+' onclick="Crash.takeGift(\''+g.name.replace(/'/g,"\\'")+'\')">'}).join("");
+var h=GIFTS.filter(function(g){return g.price<=w}).sort(function(a,b){return b.price-a.price}).slice(0,5).map(function(g){return '<img src="'+g.img+'" '+gfb()+' onclick="Crash.takeGift(\''+g.name.replace(/'/g,"'")+'\')">'}).join("");
 if(h!==UI.gi){UI.gi=h;box.innerHTML=h;box.className="gifticons"+(h?" on":"")}}
 else if(UI.gi!==""){UI.gi="";box.innerHTML="";box.className="gifticons"}}}
 RAF.cr=requestAnimationFrame(Crash.frame)},
@@ -1426,7 +1426,7 @@ $("spq").oninput=function(e){SP.q=e.target.value;SP.fill()}},
 fill:function(){var isS=SP.k===0||SP.mode==="crash";
 var l=isS?D.bag.map(function(n){return BY[n]}).filter(Boolean):GIFTS;
 if(SP.q){var q=SP.q.toLowerCase();l=l.filter(function(x){return x.name.toLowerCase().indexOf(q)>=0})}
-$("spg").innerHTML=l.length?l.slice(0,150).map(function(g){return '<div class="pi" onclick="SP.gift(\''+g.name.replace(/'/g,"\\'")+'\')"><img src="'+g.img+'" '+fb()+'><div class="n">'+g.name+'</div><div class="v">'+ns(g.price)+' ⭐</div></div>'}).join(""):'<div style="grid-column:1/-1;text-align:center;padding:20px;color:#8892b0;font-size:11px">Ничего не найдено</div>'},
+$("spg").innerHTML=l.length?l.slice(0,150).map(function(g){return '<div class="pi" onclick="SP.gift(\''+g.name.replace(/'/g,"'")+'\')"><img src="'+g.img+'" '+fb()+'><div class="n">'+g.name+'</div><div class="v">'+ns(g.price)+' ⭐</div></div>'}).join(""):'<div style="grid-column:1/-1;text-align:center;padding:20px;color:#8892b0;font-size:11px">Ничего не найдено</div>'},
 set:function(v){var e=$("spv");if(e)e.value=Math.max(1,Math.round(v))},
 mul:function(m){SP.set(Math.max(1,Math.round((uv(UP.src)||10)*m)))},
 stars:function(){var v=Math.round(parseFloat($("spv").value));if(!v||v<1)return toast("Минимум 1 ⭐","l");
