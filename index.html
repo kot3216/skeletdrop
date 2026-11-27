@@ -1426,7 +1426,7 @@ function feedAdd(){if(document.hidden||!GIFTS.length)return;var g=GIFTS[Math.flo
 r.insertAdjacentHTML("afterbegin",'<div class="tk"><img src="'+g.img+'" '+fb()+'><div><s>'+n+'</s><b>'+g.price+' ⭐</b></div></div>');
 while(r.children.length>8)r.lastElementChild.remove()}
 var LT0=Date.now(),LHid=false;
-function hideLoader(){if(LHid)return;LHid=true;var w=Math.max(0,3800-(Date.now()-LT0));
+function hideLoader(){if(LHid)return;LHid=true;var w=Math.max(0,900-(Date.now()-LT0));
 setTimeout(function(){var l=$("loader");if(!l)return;l.classList.add("off");setTimeout(function(){if(l.parentNode)l.remove()},650)},w)}
 (function(){var h="";for(var i=0;i<26;i++)h+='<i class="'+(i%4===0?"b":"")+'" style="left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(1+Math.random()*2.1)+'px;height:'+(1+Math.random()*2.1)+'px;animation-duration:'+(2.2+Math.random()*2.8)+'s;animation-delay:'+(-Math.random()*4)+'s"></i>';
 $("stl").innerHTML=h;$("crk").innerHTML=rocket();$("miniPk").innerHTML='<u>PLINKO</u>'+pkCover();
@@ -1435,13 +1435,13 @@ function pl(e){e.style.left=(22+Math.random()*38)+"%";e.style.top=(12+Math.rando
 ch.forEach(function(e,i){if(!e)return;e.style.animationDuration=(2.8+i*.3)+"s";e.style.animationDelay=(i*.7)+"s";pl(e);e.addEventListener("animationiteration",function(){pl(e)})})})();
 function loadCat(){var c=null;try{c=JSON.parse(localStorage.getItem(CATK)||"null")}catch(e){}
 if(c&&c.length>40){build(c);hideLoader();for(var i=0;i<6;i++)feedAdd();return}
-build(FB);
+build(FB);hideLoader();
 fetch(README).then(function(r){return r.text()}).then(function(t){
 var re=/ID:\s*(\d+)\s*\|\s*Name:\s*([^|\n]+?)\s*\|\s*Price:/g,m,out=[],seen={};
 while((m=re.exec(t))&&out.length<120){var nm=m[2].trim();if(PM[nm.toLowerCase()]&&!seen[m[1]]){seen[m[1]]=1;out.push([m[1],nm])}}
 if(out.length>=30){try{localStorage.setItem(CATK,JSON.stringify(out))}catch(e){}build(out)}
 for(var i=0;i<6;i++)feedAdd();hideLoader()}).catch(function(){hideLoader()})}
-try{Farm.sync();paint();loadCat();engRound();setInterval(feedAdd,3600);if(TGI)pull();setTimeout(hideLoader,7000)}
+try{Farm.sync();paint();loadCat();engRound();setInterval(feedAdd,3600);if(TGI)pull();setTimeout(hideLoader,2500)}
 catch(e){console.error(e);hideLoader()}
 </script>
 </body>
