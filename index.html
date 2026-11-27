@@ -1204,6 +1204,82 @@ input::placeholder{color:#8197b4!important}
   .nft-prize,.nft-prize img{transition:none!important;will-change:auto!important}
 }
 </style>
+
+<style id="skeletdrop-crash-cosmos-upgrade">
+/* Deeper, richer space scene for Crash */
+.cos{
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 52% 112%,rgba(34,211,238,.16),transparent 42%),
+    radial-gradient(ellipse at 12% 18%,rgba(124,58,237,.2),transparent 38%),
+    radial-gradient(ellipse at 88% 24%,rgba(14,165,233,.2),transparent 36%),
+    linear-gradient(145deg,#050916 0%,#07152b 48%,#030610 100%);
+}
+.cos::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.6;
+  background:
+    radial-gradient(1px 1px at 8% 22%,#fff 99%,transparent),
+    radial-gradient(1px 1px at 18% 72%,#b9e8ff 99%,transparent),
+    radial-gradient(1.5px 1.5px at 32% 18%,#fff 99%,transparent),
+    radial-gradient(1px 1px at 47% 62%,#d9d2ff 99%,transparent),
+    radial-gradient(1.5px 1.5px at 63% 28%,#fff 99%,transparent),
+    radial-gradient(1px 1px at 77% 75%,#b9e8ff 99%,transparent),
+    radial-gradient(1px 1px at 91% 43%,#fff 99%,transparent);
+  background-size:100% 100%;
+  animation:crash-star-glimmer 5s ease-in-out infinite alternate;
+}
+.cos::after{
+  content:"";position:absolute;z-index:2;pointer-events:none;
+  width:58%;height:42%;left:18%;top:18%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(99,102,241,.16),rgba(34,211,238,.07) 42%,transparent 72%);
+  filter:blur(15px);transform:rotate(-24deg);
+  animation:crash-nebula-drift 15s ease-in-out infinite alternate;
+}
+@keyframes crash-star-glimmer{from{opacity:.3;filter:brightness(.8)}to{opacity:.8;filter:brightness(1.4)}}
+@keyframes crash-nebula-drift{from{transform:translate3d(-8px,4px,0) rotate(-24deg) scale(.94)}to{transform:translate3d(13px,-7px,0) rotate(-15deg) scale(1.08)}}
+.nebA{background:radial-gradient(circle,rgba(45,212,191,.3),rgba(59,130,246,.12) 42%,transparent 72%);filter:blur(30px)}
+.nebB{background:radial-gradient(circle,rgba(139,92,246,.3),rgba(56,189,248,.1) 46%,transparent 72%);filter:blur(32px)}
+.slayer i{box-shadow:0 0 5px rgba(218,239,255,.85),0 0 12px rgba(96,165,250,.35)}
+.s3 i{box-shadow:0 0 8px #fff,0 0 18px rgba(103,232,249,.9),0 0 27px rgba(129,140,248,.35)}
+.planet{
+  width:116px;height:116px;right:-31px;bottom:-43px;
+  background:
+    radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.42),transparent 12%),
+    radial-gradient(circle at 32% 28%,#6db5d7 0%,#315b91 34%,#172d55 66%,#080f24 84%);
+  box-shadow:inset -16px -14px 28px rgba(0,0,0,.72),inset 4px 4px 14px rgba(191,219,254,.22),0 0 32px rgba(56,189,248,.22);
+}
+.planet::after{
+  left:-30px;top:47px;width:174px;height:25px;
+  border:3px solid rgba(147,197,253,.42);
+  box-shadow:0 0 12px rgba(56,189,248,.25),inset 0 0 8px rgba(56,189,248,.12);
+}
+.planet2{
+  width:34px;height:34px;left:17px;top:20px;
+  background:radial-gradient(circle at 32% 27%,#f5d0fe,#a78bfa 42%,#4c1d95 78%);
+  box-shadow:inset -5px -5px 9px rgba(0,0,0,.45),0 0 22px rgba(167,139,250,.45);
+}
+.horizon{
+  height:72px;
+  background:linear-gradient(180deg,transparent,rgba(56,189,248,.07) 40%,rgba(45,212,191,.13));
+}
+.comet{height:2px;width:105px;background:linear-gradient(90deg,transparent,#bae6fd 35%,#fff 52%,transparent);box-shadow:0 0 9px #7dd3fc,0 0 20px rgba(96,165,250,.7)}
+.cos.fly .comet{animation-duration:6.8s}
+.cos.fly .s1{animation-duration:21s}
+.cos.fly .s2{animation-duration:12s}
+.cos.fly .s3{animation-duration:6.5s}
+.cos.fly .ship::before{
+  background:radial-gradient(ellipse,rgba(103,232,249,.48),rgba(59,130,246,.22) 38%,transparent 72%);
+  filter:blur(8px);
+}
+.ship{filter:drop-shadow(0 0 10px rgba(103,232,249,.28));transition:filter .5s ease}
+.cos.fly .ship{filter:drop-shadow(0 0 13px rgba(103,232,249,.45))}
+.bigm{text-shadow:0 0 12px rgba(45,212,191,.8),0 0 34px rgba(56,189,248,.5)}
+.cos.fly .bigm{animation:crash-multiplier-glow 1.8s ease-in-out infinite alternate}
+@keyframes crash-multiplier-glow{from{text-shadow:0 0 12px rgba(45,212,191,.65),0 0 25px rgba(56,189,248,.25)}to{text-shadow:0 0 18px rgba(45,212,191,1),0 0 42px rgba(56,189,248,.65)}}
+@media(prefers-reduced-motion:reduce){
+ .cos::before,.cos::after,.cos.fly .bigm{animation:none!important}
+}
+</style>
 </head>
 <body>
 <div id="loader"><div class="lglow"></div><div class="lring"></div>
@@ -1678,7 +1754,7 @@ setTimeout(function(){if(fl.parentNode)fl.remove()},1300);
 if(ok){conf(22);hap("w")}else hap("l");
 HiLo.lock(false);HiLo.paint()}
 RAF.hl=requestAnimationFrame(f)}};
-var NM=["neo","mira","tony","luna","max","alex","zoya","vex","nova","orbit","kai","zen","sky","wolf","echo","juno","pax","onyx"];
+var NM=["neo","mira","tony","luna","max","alex","zoya","vex","nova","orbit","kai","zen","sky","wolf","echo","juno","pax","onyx","pixel","raven","akira","niko","sora","dante","mika","lex","storm","cosmo","blaze","ivy","kira","leo","mars","nox","rio","titan","aero","frost","astra","drake","yuki","zero","shadow","flash","ember","atlas","lyra","phoenix","cloud","riko","kairos","velox","milo","jade","viper","sonic","ghost","north","solar","comet"];
 var ENG={ph:"bet",t0:Date.now(),x:1,cap:2,pl:[],hist:[],my:0,myV:0,myG:null,cash:0,stake:{k:"s",v:10},np:0,ln:0};
 function engP(){var g=null;if(GIFTS.length&&Math.random()<.18){var pool=GIFTS.filter(function(x){return x.price<=600});if(pool.length)g=pool[Math.floor(Math.random()*pool.length)]}
 return{n:NM[Math.floor(Math.random()*NM.length)]+Math.floor(Math.random()*99),b:g?g.price:[1,5,10,25,50,100][Math.floor(Math.random()*6)],g:g?g.name:null,t:Math.round((1.12+Math.pow(Math.random(),1.8)*7)*100)/100,d:0,me:0}}
@@ -1881,14 +1957,14 @@ var ch=[$("mc0"),$("mc1"),$("mc2"),$("mc3")];
 function pl(e){e.style.left=(22+Math.random()*38)+"%";e.style.top=(12+Math.random()*44)+"%";e.textContent="×"+(1+Math.floor(Math.random()*9))}
 ch.forEach(function(e,i){if(!e)return;e.style.animationDuration=(2.8+i*.3)+"s";e.style.animationDelay=(i*.7)+"s";pl(e);e.addEventListener("animationiteration",function(){pl(e)})})})();
 function loadCat(){var c=null;try{c=JSON.parse(localStorage.getItem(CATK)||"null")}catch(e){}
-if(c&&c.length>40){build(c);hideLoader();for(var i=0;i<6;i++)feedAdd();return}
+if(c&&c.length>40){build(c);hideLoader();for(var i=0;i<3;i++)feedAdd();return}
 build(FB);hideLoader();
 fetch(README).then(function(r){return r.text()}).then(function(t){
 var re=/ID:\s*(\d+)\s*\|\s*Name:\s*([^|\n]+?)\s*\|\s*Price:/g,m,out=[],seen={};
 while((m=re.exec(t))&&out.length<120){var nm=m[2].trim();if(PM[nm.toLowerCase()]&&!seen[m[1]]){seen[m[1]]=1;out.push([m[1],nm])}}
 if(out.length>=30){try{localStorage.setItem(CATK,JSON.stringify(out))}catch(e){}build(out)}
 for(var i=0;i<6;i++)feedAdd();hideLoader()}).catch(function(){hideLoader()})}
-try{Farm.sync();paint();loadCat();engRound();setInterval(feedAdd,3600);if(TGI)pull();setTimeout(hideLoader,2500)}
+try{Farm.sync();paint();loadCat();engRound();setInterval(feedAdd,5200);if(TGI)pull();setTimeout(hideLoader,2500)}
 catch(e){console.error(e);hideLoader()}
 </script>
 </body>
