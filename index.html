@@ -2039,65 +2039,23 @@ after(Dep,"open",function(){var m=$("dm");if(m)m.insertAdjacentHTML("beforebegin
 </script>
 <!-- ===== /SKELETDROP BOOST ===== -->
 
-<!-- ===== SKELETDROP FROG ROCKET TEST PATCH ===== -->
-<style id="sd-frog-css">
-.sh .cos{height:clamp(236px,40dvh,320px)}
-.cos .ship{width:clamp(92px,15.5dvh,114px);margin-left:calc(clamp(92px,15.5dvh,114px)/-2);bottom:14%;z-index:6}
-.cos .bigm{left:14px;right:auto;text-align:left;top:10px;font-size:40px;z-index:8;pointer-events:none;text-shadow:0 2px 10px #000,0 0 18px rgba(0,0,0,.85),0 0 26px rgba(45,212,191,.45)}
-.cos .fst{z-index:8}
-.rin svg{filter:drop-shadow(0 0 10px rgba(255,170,40,.35)) drop-shadow(0 5px 8px rgba(0,0,0,.55))}
-.gp-frog{transform-box:fill-box;transform-origin:50% 70%;animation:gpFrogFloat 2.8s ease-in-out infinite}
-.gp-flame{transform-origin:50% 0;animation:gpFlame .24s ease-in-out infinite alternate}
-.gp-shine{animation:gpShine 3.6s ease-in-out infinite}
-@keyframes gpFrogFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-2px) rotate(1deg)}}
-@keyframes gpFlame{from{transform:scaleY(.88) scaleX(1)}to{transform:scaleY(1.12) scaleX(.94)}}
-@keyframes gpShine{0%,20%{transform:translateX(-38px)}75%,100%{transform:translateX(100px)}}
-@media(prefers-reduced-motion:reduce){.gp-frog,.gp-flame,.gp-shine{animation:none!important}}
-/* Telegram WebView: меньше тяжёлых фильтров и перерисовок */
+
+
+
+<!-- ===== SKELETDROP GAME SCROLL FIX (TEST) ===== -->
+<style id="sd-game-scroll-fix">
+/* Keep the game sheet inside the viewport while allowing every game to scroll. */
+.veil.on{align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sh{max-height:calc(100dvh - 16px);overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}
+.sh>*{flex-shrink:0}
+.sh .x{position:sticky;top:0;align-self:flex-end;margin-bottom:-30px}
+@supports(height:100svh){.sh{max-height:calc(100svh - 16px)}}
 @media(max-width:700px){
- .rin svg{filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
- .cos *{backdrop-filter:none!important}
- .sdflash,.sdcv,.sdcxp{will-change:auto}
+ .veil{padding:8px;align-items:flex-start}
+ .sh,.sh.w{width:100%;max-height:calc(100dvh - 16px);padding:15px 12px 18px;overflow-y:auto!important}
 }
 </style>
-<script id="sd-frog-js">
-(function(){
-"use strict";
-window.rocket=function(){
- return '<div class="rin" style="transform:rotate(38deg)"><svg viewBox="0 0 80 168" xmlns="http://www.w3.org/2000/svg" aria-label="Золотая ракета с лягушкой"><defs>'+
- '<linearGradient id="gpb2" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#684208"/><stop offset=".22" stop-color="#d49b20"/><stop offset=".42" stop-color="#fff0a5"/><stop offset=".58" stop-color="#f6cb55"/><stop offset="1" stop-color="#543405"/></linearGradient>'+
- '<radialGradient id="gpfrog2" cx=".3" cy=".25" r=".85"><stop stop-color="#fff0a0"/><stop offset=".48" stop-color="#e8b52a"/><stop offset="1" stop-color="#825407"/></radialGradient>'+
- '<linearGradient id="gpflame2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fffbd5"/><stop offset=".3" stop-color="#ffd34e"/><stop offset=".72" stop-color="#ff7b22"/><stop offset="1" stop-color="#ed3525" stop-opacity="0"/></linearGradient>'+
- '<clipPath id="gpc2"><path d="M40 0C56 17 61 37 61 59V117H19V59C19 37 24 17 40 0Z"/></clipPath></defs>'+
- '<ellipse cx="40" cy="145" rx="17" ry="27" fill="#ff8b24" opacity=".3"/>'+
- '<path class="gp-flame" d="M26 116Q20 148 40 168Q60 148 54 116Z" fill="url(#gpflame2)"/>'+
- '<path d="M19 82L3 130L20 116ZM61 82L77 130L60 116Z" fill="url(#gpb2)" stroke="#6b4509"/>'+
- '<path d="M26 108L54 108L59 125H21Z" fill="#8b5c0b" stroke="#392403"/>'+
- '<path d="M40 0C56 17 61 37 61 59V117H19V59C19 37 24 17 40 0Z" fill="url(#gpb2)" stroke="#684208" stroke-width="1.5"/>'+
- '<g clip-path="url(#gpc2)"><path d="M0 27H80M0 34H80M0 91H80M0 98H80" stroke="#fff1ac" stroke-width="2" opacity=".65"/><path class="gp-shine" d="M8 0H19V120H8Z" fill="#fff" opacity=".35"/>'+
- '<ellipse cx="40" cy="66" rx="23" ry="10" fill="#382403" stroke="#ffe08a" stroke-width="4"/>'+
- '<g class="gp-frog"><ellipse cx="40" cy="72" rx="15" ry="19" fill="url(#gpfrog2)" stroke="#714909"/><path d="M24 48Q18 28 30 24Q36 21 40 34Q45 20 54 25Q64 31 56 49Z" fill="url(#gpfrog2)" stroke="#714909"/>'+
- '<ellipse cx="30" cy="31" rx="7" ry="8" fill="#ffe18a" stroke="#714909"/><ellipse cx="51" cy="31" rx="7" ry="8" fill="#ffe18a" stroke="#714909"/><circle cx="30" cy="31" r="3" fill="#251805"/><circle cx="51" cy="31" r="3" fill="#251805"/><path d="M31 47Q40 54 50 46" fill="none" stroke="#704408" stroke-width="2" stroke-linecap="round"/><path d="M29 70Q20 77 27 86M51 70Q60 77 53 86" fill="none" stroke="#a87512" stroke-width="5" stroke-linecap="round"/></g></g>'+
- '<path d="M19 116H61" stroke="#fff0a0" stroke-width="2"/><circle cx="40" cy="12" r="2" fill="#fff6c7"/></svg></div>';
-};
-function refreshRocket(){try{var a=document.getElementById("crk");if(a)a.innerHTML=window.rocket();if(typeof UI!=="undefined"&&UI&&UI.sp)UI.sp.innerHTML=window.rocket()}catch(e){}}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",refreshRocket,{once:true});else refreshRocket();
-/* Снижаем цену эффектов на телефонах и в Telegram WebView без отключения анимаций. */
-try{
- var mobile=matchMedia("(max-width:700px)").matches;
- var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
- var c=document.querySelector("canvas");
- if(c&&mobile){c.style.opacity=".9"}
- if(window.SDX&&mobile){
-  var oldBurst=SDX.burst;
-  SDX.burst=function(x,y,o){o=o||{};var q={};for(var k in o)q[k]=o[k];q.n=Math.min(o.n||30,reduce?0:18);q.speed=Math.min(o.speed||260,190);q.life=Math.min(o.life||1.1,.75);return oldBurst(x,y,q)};
-  var oldRain=SDX.rain;
-  SDX.rain=function(colors,n){return oldRain(colors,Math.min(n||0,reduce?0:32))};
- }
-}catch(e){}
-})();
-</script>
-<!-- ===== /SKELETDROP FROG ROCKET TEST PATCH ===== -->
+<!-- ===== /SKELETDROP GAME SCROLL FIX (TEST) ===== -->
 
 </body>
 </html>
